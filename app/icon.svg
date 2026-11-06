@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="For Tiara, With Love">
+  <defs>
+    <radialGradient id="bg" cx="38%" cy="28%" r="80%">
+      <stop offset="0%" stop-color="#3a2058"/>
+      <stop offset="60%" stop-color="#1d102c"/>
+      <stop offset="100%" stop-color="#0d0617"/>
+    </radialGradient>
+    <linearGradient id="petal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f6ecff"/>
+      <stop offset="55%" stop-color="#d8b4fe"/>
+      <stop offset="100%" stop-color="#f5c9e8"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <g fill="url(#petal)" transform="translate(32 32)">
+    <ellipse rx="8" ry="15" cy="-11"/>
+    <ellipse rx="8" ry="15" cy="-11" transform="rotate(72)"/>
+    <ellipse rx="8" ry="15" cy="-11" transform="rotate(144)"/>
+    <ellipse rx="8" ry="15" cy="-11" transform="rotate(216)"/>
+    <ellipse rx="8" ry="15" cy="-11" transform="rotate(288)"/>
+    <circle r="4" fill="#6d3fa4"/>
+    <circle r="1.6" fill="#fdfaff"/>
+  </g>
+</svg>
