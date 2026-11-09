@@ -52,6 +52,7 @@ server*.log
 
 # qa / test artifacts
 /qa
+/shots
 /.playwright-mcp
 screenshot*.js
 screenshot*.png
