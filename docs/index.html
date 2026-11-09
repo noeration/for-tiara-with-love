@@ -3,535 +3,1127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#140a22">
 <title>For Tiara, With Love</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<meta name="description" content="Sebuah taman kecil yang tumbuh untuk Tiara.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #140a22; --bg-deep: #0d0617; --fg: #f4edff;
-  --orchid: #d8b4fe; --lilac: #c4b5fd; --lavender: #e9e0ff;
-  --plum: #241238; --rose: #f5c9e8; --petal: #f7d9f4; --muted: #b9a8cf;
-  --card: #1d102c; --border: rgba(216,180,254,0.16);
+/* ==========================================================================
+   FOR TIARA, WITH LOVE
+   Satu file. Semua isi ada di HTML, semua gaya ada di sini.
+   Ganti foto: public/images/... lalu jalankan `node scripts/build-static.mjs`
+   ========================================================================== */
+:root{
+  --bg:#140a22; --bg-deep:#0d0617; --bg-soft:#1a0f2b;
+  --fg:#f4edff; --muted:#b9a8cf;
+  --orchid:#d8b4fe; --lilac:#c4b5fd; --lavender:#e9e0ff;
+  --rose:#f5c9e8; --petal:#f7d9f4; --plum:#241238;
+  --card:#1d102c; --border:rgba(216,180,254,.16);
+  --paper:#f7f0e6; --ink:#3b2350;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+  --script:'Great Vibes',cursive;
+  --ease:cubic-bezier(.22,.8,.24,1);
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Plus Jakarta Sans',sans-serif; background:linear-gradient(180deg,#140a22 0%,#11081d 55%,#0d0617 100%); color:var(--fg); min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
-h1,h2,h3 { font-family:'Cormorant Garamond',serif; text-wrap:balance; }
-.container { max-width:1100px; margin:0 auto; padding:0 24px; }
-.eyebrow { font-size:.7rem; text-transform:uppercase; letter-spacing:.3em; color:var(--orchid); opacity:.7; margin-bottom:8px; }
-.section { padding:80px 0; position:relative; }
-.section-title { font-size:clamp(2rem,5vw,3.5rem); font-weight:300; color:var(--lavender); margin-bottom:12px; }
-.section-desc { color:var(--muted); max-width:600px; line-height:1.8; margin-bottom:30px; }
-.text-gradient { background:linear-gradient(135deg,#e9e0ff,#d8b4fe,#f5c9e8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{
+  font-family:var(--sans); color:var(--fg); background:var(--bg);
+  min-height:100vh; overflow-x:clip; -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body.locked{overflow:hidden}
+h1,h2,h3{font-family:var(--serif);font-weight:300;text-wrap:balance;line-height:1.05}
+p{text-wrap:pretty}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit;color:inherit}
+a{color:inherit}
+::selection{background:rgba(216,180,254,.35);color:#fff}
+:focus-visible{outline:2px solid var(--orchid);outline-offset:4px;border-radius:6px}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#0e0718}
+::-webkit-scrollbar-thumb{background:linear-gradient(#5b3a86,#3a2155);border-radius:99px;border:2px solid #0e0718}
 
-/* Ambient background */
-.ambient { position:fixed; inset:0; z-index:0; pointer-events:none; }
-.ambient .nebula { position:absolute; inset:-8%; background:radial-gradient(ellipse at 30% 20%,rgba(176,132,255,.45) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(245,201,232,.32) 0%,transparent 60%); filter:blur(40px); animation:nebula-drift 24s ease-in-out infinite; }
-.ambient .mist { position:absolute; inset:0; background:linear-gradient(120deg,rgba(201,167,255,.18),rgba(245,201,232,.11),rgba(176,132,255,.18)); opacity:.9; background-size:200% 200%; animation:mist-flow 18s ease-in-out infinite; }
-.ambient .glow1 { position:absolute; left:-22%; top:6%; width:60vh; height:60vh; border-radius:50%; background:radial-gradient(circle,rgba(201,167,255,.4) 0%,transparent 70%); filter:blur(80px); animation:float-gentle 6s ease-in-out infinite; }
-.ambient .glow2 { position:absolute; right:-26%; top:18%; width:70vh; height:70vh; border-radius:50%; background:radial-gradient(circle,rgba(245,201,232,.34) 0%,transparent 72%); filter:blur(80px); animation:float-gentle 8s ease-in-out infinite reverse; }
-.ambient .glow3 { position:absolute; bottom:-26%; left:16%; width:68vh; height:68vh; border-radius:50%; background:radial-gradient(circle,rgba(176,132,255,.36) 0%,transparent 74%); filter:blur(80px); animation:float-gentle 7s ease-in-out infinite; }
-.star { position:absolute; border-radius:50%; background:#f4ecff; box-shadow:0 0 8px 1px rgba(233,224,255,.8); animation:twinkle ease-in-out infinite; }
-.petal { position:absolute; top:-6vh; border-radius:58% 42% 52% 48%/48% 58% 42% 52%; background:linear-gradient(145deg,rgba(248,226,255,.95),rgba(196,150,255,.55)); box-shadow:0 0 12px rgba(216,180,254,.35); animation:petal-fall linear infinite; will-change:transform; }
-@keyframes nebula-drift { 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(-3%,2%,0) scale(1.08)} }
-@keyframes mist-flow { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-@keyframes float-gentle { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-10px,0)} }
-@keyframes twinkle { 0%,100%{opacity:.15;transform:scale(.7)} 50%{opacity:.9;transform:scale(1.15)} }
-@keyframes petal-fall { 0%{transform:translate3d(0,-12vh,0) rotate(0deg)} 35%{transform:translate3d(3.5vw,34vh,0) rotate(140deg)} 70%{transform:translate3d(-2.5vw,74vh,0) rotate(280deg)} 100%{transform:translate3d(1.5vw,114vh,0) rotate(420deg)} }
-@keyframes bloom { from{transform:scale(.25) rotate(-12deg);opacity:0} to{transform:scale(1) rotate(0deg);opacity:1} }
-@keyframes fadeIn { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
-@keyframes confetti-fall { 0%{transform:translate3d(0,-10vh,0) rotate(0deg);opacity:1} 100%{transform:translate3d(var(--drift,0px),108vh,0) rotate(720deg);opacity:.9} }
-@keyframes spin-slow { to{transform:rotate(360deg)} }
-@keyframes equalize { 0%,100%{transform:scaleY(.35)} 50%{transform:scaleY(1)} }
+/* ---------- ambience ---------- */
+.grain{position:fixed;inset:0;z-index:3;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.ambient .nebula{position:absolute;inset:-10%;background:
+  radial-gradient(ellipse at 26% 18%,rgba(176,132,255,.42) 0%,transparent 52%),
+  radial-gradient(ellipse at 74% 74%,rgba(245,201,232,.28) 0%,transparent 56%),
+  radial-gradient(ellipse at 50% 110%,rgba(120,80,200,.32) 0%,transparent 60%);
+  filter:blur(50px);animation:nebula 26s ease-in-out infinite}
+.ambient .mist{position:absolute;inset:-20%;background:linear-gradient(115deg,rgba(201,167,255,.14),rgba(245,201,232,.08),rgba(176,132,255,.14));
+  background-size:220% 220%;animation:mist 22s ease-in-out infinite;filter:blur(20px)}
+.ambient .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55}
+.ambient .orb.a{width:58vh;height:58vh;left:-16%;top:4%;background:radial-gradient(circle,rgba(201,167,255,.55),transparent 68%);animation:float 9s ease-in-out infinite}
+.ambient .orb.b{width:66vh;height:66vh;right:-20%;top:22%;background:radial-gradient(circle,rgba(245,201,232,.42),transparent 70%);animation:float 12s ease-in-out infinite reverse}
+.ambient .orb.c{width:64vh;height:64vh;left:12%;bottom:-24%;background:radial-gradient(circle,rgba(150,110,230,.45),transparent 72%);animation:float 10s ease-in-out infinite}
+.star{position:absolute;border-radius:50%;background:#f6efff;box-shadow:0 0 10px 1px rgba(233,224,255,.85);animation:twinkle ease-in-out infinite}
+.petal{position:absolute;top:-10vh;border-radius:58% 42% 52% 48%/48% 58% 42% 52%;
+  background:linear-gradient(145deg,rgba(248,226,255,.95),rgba(196,150,255,.5));
+  box-shadow:0 0 14px rgba(216,180,254,.4);animation:petal-fall linear infinite;will-change:transform}
+@keyframes nebula{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-3%,2%,0) scale(1.08)}}
+@keyframes mist{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes float{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-22px,0)}}
+@keyframes twinkle{0%,100%{opacity:.12;transform:scale(.65)}50%{opacity:.95;transform:scale(1.15)}}
+@keyframes petal-fall{0%{transform:translate3d(0,-14vh,0) rotate(0)}30%{transform:translate3d(4vw,30vh,0) rotate(150deg)}65%{transform:translate3d(-3vw,68vh,0) rotate(300deg)}100%{transform:translate3d(2vw,118vh,0) rotate(440deg)}}
+@keyframes fade-up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+@keyframes bloom{from{transform:scale(.2) rotate(-14deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+@keyframes flicker{0%{transform:translateX(-50%) scale(1) rotate(-3deg)}100%{transform:translateX(-50%) scale(1.14) rotate(3deg)}}
+@keyframes smoke{0%{opacity:.7;transform:translate(-50%,0) scale(.6)}100%{opacity:0;transform:translate(-50%,-58px) scale(1.9)}}
+@keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes eq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+@keyframes confetti{0%{transform:translate3d(0,-10vh,0) rotate(0);opacity:1}100%{transform:translate3d(var(--dx,0),112vh,0) rotate(760deg);opacity:.85}}
+@keyframes heart-rise{0%{opacity:0;transform:translate3d(0,0,0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translate3d(var(--dx,0),-70vh,0) scale(1.2)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(216,180,254,.5)}70%{box-shadow:0 0 0 22px rgba(216,180,254,0)}100%{box-shadow:0 0 0 0 rgba(216,180,254,0)}}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
 
-/* Opening gate */
-.opening { position:fixed; inset:0; z-index:80; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#140a22 0%,#11081d 55%,#0d0617 100%); transition:opacity .8s, filter .8s; }
-.opening.hidden { opacity:0; pointer-events:none; filter:blur(10px); }
-.opening .content { max-width:1100px; width:100%; padding:40px 24px; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
-@media(max-width:768px){ .opening .content { grid-template-columns:1fr; text-align:center; } }
-.opening h1 { font-size:clamp(3rem,8vw,7.5rem); font-weight:300; line-height:.98; background:linear-gradient(135deg,#e9e0ff,#d8b4fe,#f5c9e8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.opening .greeting { font-family:'Great Vibes',cursive; font-size:clamp(1.5rem,4vw,2.6rem); color:var(--lavender); }
-.opening .subtitle { color:var(--muted); font-size:clamp(.9rem,2vw,1.1rem); line-height:1.6; max-width:500px; }
-.opening .cta { display:inline-flex; align-items:center; gap:8px; padding:14px 32px; border-radius:999px; background:linear-gradient(135deg,#e9e0ff,#f7d9f4); color:var(--plum); font-weight:500; font-size:.9rem; cursor:pointer; border:none; box-shadow:0 20px 60px -20px rgba(200,160,255,.9); transition:transform .3s, box-shadow .3s; }
-.opening .cta:hover { transform:scale(1.02); box-shadow:0 24px 70px -18px rgba(230,210,255,.95); }
-.opening .portrait-frame { position:relative; max-width:340px; margin:0 auto; }
-.opening .portrait-frame .glow { position:absolute; inset:-24px; border-radius:3rem; background:radial-gradient(circle,rgba(233,224,255,.18) 0%,transparent 70%); filter:blur(40px); }
-.opening .portrait-frame .frame { position:relative; border-radius:2.4rem; padding:2px; background:linear-gradient(135deg,rgba(216,180,254,.3),rgba(245,201,232,.2)); }
-.opening .portrait-frame img { width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:2.38rem; display:block; }
-.opening .portrait-frame .caption { text-align:center; font-family:'Great Vibes',cursive; font-size:1.3rem; color:var(--lavender); margin-top:16px; opacity:.9; }
-.opening .placeholder-badge { position:absolute; top:12px; right:12px; background:rgba(20,10,34,.6); padding:4px 10px; border-radius:999px; font-size:.6rem; text-transform:uppercase; letter-spacing:.2em; color:var(--lavender); }
+/* ---------- cursor / progress ---------- */
+.cursor-glow{position:fixed;width:340px;height:340px;border-radius:50%;left:0;top:0;z-index:4;pointer-events:none;
+  background:radial-gradient(circle,rgba(216,180,254,.35) 0%,rgba(216,180,254,.1) 42%,transparent 66%);
+  filter:blur(26px);transform:translate(-50%,-50%);opacity:0;transition:opacity .4s}
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:70;background:linear-gradient(90deg,var(--orchid),var(--rose));box-shadow:0 0 14px rgba(216,180,254,.8)}
 
-/* Nav */
-.site-nav { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; justify-content:center; padding:12px; gap:4px; flex-wrap:wrap; background:rgba(13,6,23,.6); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
-.site-nav a { padding:8px 16px; border-radius:12px; color:var(--lavender); opacity:.8; text-decoration:none; font-size:.85rem; transition:background .2s; }
-.site-nav a:hover, .site-nav a.active { background:rgba(255,255,255,.1); color:#fff; }
+/* ---------- gate ---------- */
+.gate{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;overflow-y:auto;overscroll-behavior:contain;padding:clamp(20px,4vw,56px);
+  background:radial-gradient(ellipse at 30% 20%,#1d1030,#140a22 55%,#0b0513 100%);transition:opacity .9s var(--ease),filter .9s var(--ease),transform .9s var(--ease)}
+.gate.hidden{opacity:0;pointer-events:none;filter:blur(14px);transform:scale(1.04)}
+.gate-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,72px);align-items:center;max-width:1140px;width:100%;margin:auto}
+.gate-copy>*{opacity:0;animation:fade-up .9s var(--ease) forwards}
+.gate-copy>*:nth-child(1){animation-delay:.15s}
+.gate-copy>*:nth-child(2){animation-delay:.3s}
+.gate-copy>*:nth-child(3){animation-delay:.45s}
+.gate-copy>*:nth-child(4){animation-delay:.6s}
+.gate .kicker{display:inline-flex;align-items:center;gap:12px;font-size:.68rem;letter-spacing:.42em;text-transform:uppercase;color:rgba(216,180,254,.8)}
+.gate .kicker svg{width:46px;height:56px;flex:none;color:var(--orchid)}
+.gate h1{font-size:clamp(3.6rem,9vw,8rem);line-height:.92;letter-spacing:-.02em;
+  background:linear-gradient(135deg,#f6efff 10%,#d8b4fe 48%,#f5c9e8 90%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.gate .script{font-family:var(--script);font-size:clamp(1.6rem,4vw,2.7rem);color:var(--lavender);margin-bottom:14px}
+.gate .lede{color:var(--muted);line-height:1.75;max-width:46ch;font-size:clamp(.95rem,1.6vw,1.05rem)}
+.gate .cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:30px}
+.gate .hint{color:rgba(185,168,207,.75);font-size:.78rem;letter-spacing:.02em}
+.gate-portrait{position:relative;justify-self:center;width:min(360px,74vw);opacity:0;animation:fade-up 1.1s .5s var(--ease) forwards}
+.gate-portrait .halo{position:absolute;inset:-14%;border-radius:50%;background:radial-gradient(circle,rgba(233,224,255,.22),transparent 65%);filter:blur(30px);animation:float 7s ease-in-out infinite}
+.gate-portrait .ring{position:absolute;inset:-8%;border-radius:42px;border:1px solid rgba(216,180,254,.28);transform:rotate(-3deg);animation:sway 9s ease-in-out infinite}
+.gate-portrait .frame{position:relative;border-radius:32px;padding:2px;background:linear-gradient(150deg,rgba(216,180,254,.55),rgba(245,201,232,.28) 45%,rgba(216,180,254,.1));
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.95),0 0 60px -20px rgba(200,160,255,.5)}
+.gate-portrait img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:30px}
+.gate-portrait figcaption{font-family:var(--script);font-size:1.45rem;text-align:center;color:var(--lavender);margin-top:16px;opacity:.92}
+.gate-portrait .badge{position:absolute;top:14px;right:14px;z-index:2;background:rgba(13,6,23,.65);backdrop-filter:blur(8px);border:1px solid rgba(216,180,254,.2);border-radius:99px;padding:5px 12px;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--lavender)}
+.gate-portrait .spark{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 12px 3px rgba(216,180,254,.8);animation:twinkle 3.4s ease-in-out infinite}
+@media(max-width:860px){
+  .gate-inner{grid-template-columns:1fr;text-align:center;gap:26px}
+  .gate-copy{order:2}.gate-portrait{order:1;width:min(240px,58vw)}
+  .gate .kicker{justify-content:center}.gate .lede{margin:0 auto}.gate .cta-row{justify-content:center}
+  .gate-portrait img{aspect-ratio:1/1}
+}
 
-/* Main content */
-.main-content { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:100px 24px 60px; }
-.content-section { margin-bottom:80px; }
-.section-header { margin-bottom:30px; }
-.section-header .eyebrow { margin-bottom:8px; }
-.section-header h2 { font-size:clamp(1.8rem,4vw,2.8rem); color:var(--lavender); margin-bottom:8px; }
-.section-header p { color:var(--muted); line-height:1.8; max-width:700px; }
+/* ---------- buttons ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;border:none;cursor:pointer;overflow:hidden;
+  padding:15px 30px;border-radius:999px;font-size:.88rem;font-weight:500;letter-spacing:.01em;
+  background:linear-gradient(135deg,#f2eaff,#e6d3ff 45%,#f7d9f4);color:var(--plum);
+  box-shadow:0 22px 50px -22px rgba(220,190,255,.9);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 30px 60px -22px rgba(230,205,255,.95)}
+.btn:active{transform:translateY(0) scale(.985)}
+.btn svg{width:17px;height:17px;flex:none}
+.btn::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.75),transparent 45%);opacity:0;transition:opacity .35s}
+.btn:hover::after{opacity:.6}
+.btn.ghost{background:transparent;color:var(--lavender);border:1px solid var(--border);box-shadow:none}
+.btn.ghost:hover{background:rgba(216,180,254,.08)}
+.btn.ghost::after{display:none}
 
-/* Memories grid */
-.memories-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:24px; }
-.memory-card { background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:transform .3s; }
-.memory-card:hover { transform:translateY(-4px); }
-.memory-card .img-wrap { position:relative; aspect-ratio:4/5; overflow:hidden; }
-.memory-card .img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
-.memory-card:hover .img-wrap img { transform:scale(1.05); }
-.memory-card .info { padding:16px; }
-.memory-card .caption { color:var(--lavender); font-size:.9rem; margin-bottom:4px; }
-.memory-card .date { color:var(--muted); font-size:.75rem; }
+/* ---------- site / nav ---------- */
+.site{position:relative;z-index:2}
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:12px 14px;
+  background:linear-gradient(180deg,rgba(13,6,23,.9),rgba(13,6,23,.35) 70%,transparent);backdrop-filter:blur(16px)}
+.nav-inner{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;padding:6px;border-radius:99px;border:1px solid rgba(216,180,254,.14);background:rgba(29,16,44,.55)}
+.nav a{position:relative;padding:9px 16px;border-radius:99px;text-decoration:none;font-size:.8rem;color:var(--muted);transition:color .3s,background .3s}
+.nav a:hover{color:var(--lavender)}
+.nav a.active{color:#1a0b2e;background:linear-gradient(135deg,#f2eaff,#d8b4fe);box-shadow:0 8px 22px -12px rgba(216,180,254,.9)}
+main{padding-top:0}
 
-/* Wishes */
-.wishes { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-top:24px; }
-.wish { background:rgba(216,180,254,.05); border:1px solid rgba(216,180,254,.12); border-radius:14px; padding:22px; }
-.wish .wish-title { color:var(--orchid); font-weight:600; margin-bottom:8px; font-size:.95rem; }
-.wish .wish-text { color:var(--muted); font-size:.85rem; line-height:1.65; }
+/* ---------- sections ---------- */
+.section{position:relative;max-width:1120px;margin:0 auto;padding:clamp(64px,10vw,120px) clamp(20px,4vw,32px);scroll-margin-top:86px}
+.section-head{max-width:720px;margin-bottom:clamp(30px,5vw,48px)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.66rem;letter-spacing:.38em;text-transform:uppercase;color:rgba(216,180,254,.82);margin-bottom:14px}
+.eyebrow::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,var(--orchid),transparent)}
+.section h2{font-size:clamp(2.1rem,5vw,3.6rem);color:var(--lavender);margin-bottom:14px;letter-spacing:-.01em}
+.section-head p{color:var(--muted);line-height:1.85;max-width:62ch}
+.section-head.center{text-align:center;margin-inline:auto}
+.section-head.center .eyebrow{justify-content:center}
+.section-head.center .eyebrow::before{display:none}
+.section-head.center p{margin-inline:auto}
 
-/* Artwork */
-.artwork-card { max-width:500px; margin:0 auto; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:20px; overflow:hidden; }
-.artwork-card img { width:100%; aspect-ratio:1.4; object-fit:cover; }
-.artwork-card .info { padding:24px; }
-.artwork-card .title { font-size:1.5rem; color:var(--lavender); margin-bottom:4px; }
-.artwork-card .meta { color:var(--muted); font-size:.8rem; margin-bottom:12px; }
-.artwork-card .desc { color:var(--muted); font-size:.9rem; line-height:1.7; }
+/* reveal */
+.js .reveal{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+.js .reveal.in{opacity:1;transform:none}
+.js .reveal.left{transform:translateX(-22px)}
+.js .reveal.right{transform:translateX(22px)}
+.js .reveal.zoom{transform:scale(.94)}
 
-/* Letter */
-.letter-box { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:20px; padding:40px; max-width:700px; margin:0 auto; }
-.letter-box .greeting { font-family:'Great Vibes',cursive; font-size:2rem; color:var(--lavender); margin-bottom:20px; }
-.letter-box p { color:var(--lavender); line-height:2; margin-bottom:16px; font-size:1.05rem; }
-.letter-box .poem { background:rgba(216,180,254,.05); border-left:3px solid var(--orchid); padding:20px 30px; margin:24px 0; border-radius:0 12px 12px 0; }
-.letter-box .poem .title { font-family:'Great Vibes',cursive; font-size:1.5rem; color:var(--orchid); margin-bottom:10px; }
-.letter-box .poem .line { color:var(--lavender); font-style:italic; line-height:2; display:block; }
-.letter-box .closing { font-family:'Great Vibes',cursive; font-size:1.8rem; color:var(--orchid); margin-top:24px; }
-.letter-box .signature { font-family:'Great Vibes',cursive; font-size:1.5rem; color:var(--lavender); margin-top:8px; }
+/* ---------- message ---------- */
+.message{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,64px);align-items:start}
+.prose p{color:var(--lavender);line-height:1.95;margin-bottom:18px;font-size:clamp(1rem,1.6vw,1.09rem);opacity:.92}
+.prose p:first-of-type::first-letter{font-family:var(--serif);float:left;font-size:4.1rem;line-height:.8;padding:6px 12px 0 0;color:var(--orchid)}
+.quote-card{position:relative;padding:30px;border-radius:22px;border:1px solid var(--border);background:
+  linear-gradient(160deg,rgba(216,180,254,.12),rgba(245,201,232,.05));overflow:hidden}
+.quote-card::before{content:"“";position:absolute;top:-18px;right:16px;font-family:var(--serif);font-size:9rem;color:rgba(216,180,254,.14);line-height:1}
+.quote-card p{font-family:var(--serif);font-size:clamp(1.2rem,2.2vw,1.55rem);line-height:1.55;color:var(--lavender);font-style:italic}
+.quote-card span{display:block;margin-top:16px;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+.quote-card .shine{position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.12),transparent 60%);opacity:0;transition:opacity .4s;pointer-events:none}
+.quote-card:hover .shine{opacity:1}
+@media(max-width:860px){.message{grid-template-columns:1fr}}
 
-/* Song / Vinyl */
-.song-section { text-align:center; }
-.vinyl-wrap { position:relative; width:280px; height:280px; margin:0 auto 30px; }
-.vinyl { width:100%; height:100%; border-radius:50%; background:#120a1e; box-shadow:0 40px 100px -30px rgba(0,0,0,.95); position:relative; overflow:hidden; }
-.vinyl.spinning { animation:spin-slow 22s linear infinite; }
-.vinyl .cover { position:absolute; inset:12px; border-radius:50%; overflow:hidden; }
-.vinyl .cover img { width:100%; height:100%; object-fit:cover; }
-.vinyl .grooves { position:absolute; inset:0; border-radius:50%; border:1px solid rgba(255,255,255,.05); }
-.vinyl .center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:64px; height:64px; border-radius:50%; background:rgba(13,6,23,.8); border:1px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; }
-.vinyl .center .dot { width:12px; height:12px; border-radius:50%; background:var(--lavender); opacity:.7; }
-.song-info h3 { font-size:2rem; color:var(--lavender); margin-bottom:4px; }
-.song-info .artist { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.2em; margin-bottom:16px; }
-.song-info .note { color:var(--muted); font-size:.9rem; font-style:italic; max-width:500px; margin:0 auto 20px; line-height:1.7; }
-.play-btn { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#e9e0ff,#f7d9f4); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; box-shadow:0 16px 40px -14px rgba(233,224,255,.85); transition:transform .2s; }
-.play-btn:hover { transform:scale(1.05); }
-.play-btn svg { width:20px; height:20px; fill:var(--plum); }
-.audio-player { width:100%; max-width:400px; margin:0 auto; }
+/* marquee */
+.marquee{position:relative;overflow:hidden;border-block:1px solid rgba(216,180,254,.12);padding:18px 0;
+  background:linear-gradient(90deg,rgba(216,180,254,.06),transparent 30%,transparent 70%,rgba(245,201,232,.06));mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;gap:44px;width:max-content;animation:marquee 34s linear infinite}
+.marquee span{font-family:var(--serif);font-size:clamp(1.3rem,3vw,2rem);font-style:italic;color:rgba(233,224,255,.55);white-space:nowrap;display:flex;align-items:center;gap:44px}
+.marquee span::after{content:"✿";font-style:normal;font-size:.8em;color:rgba(216,180,254,.5)}
 
-/* 2D Cake */
-.cake-section { text-align:center; }
-.cake-container { position:relative; width:300px; height:300px; margin:0 auto 30px; }
-.cake { position:absolute; bottom:40px; left:50%; transform:translateX(-50%); width:240px; }
-.cake-base { width:240px; height:80px; background:linear-gradient(180deg,#2a1740,#1d102c); border-radius:120px 120px 20px 20px; position:relative; box-shadow:0 20px 40px rgba(0,0,0,.5); }
-.cake-layer { width:200px; height:60px; background:linear-gradient(180deg,#38204f,#2a1740); border-radius:100px 100px 12px 12px; position:absolute; bottom:70px; left:50%; transform:translateX(-50%); }
-.cake-top { width:160px; height:40px; background:linear-gradient(180deg,#c9a7ff,#a78bfa); border-radius:80px 80px 8px 8px; position:absolute; bottom:120px; left:50%; transform:translateX(-50%); }
-.candle { position:absolute; width:8px; height:40px; background:linear-gradient(180deg,#f4edff,#d8b4fe); border-radius:4px; bottom:150px; cursor:pointer; transition:transform .2s; }
-.candle:hover { transform:scaleY(1.1); }
-.candle .flame { position:absolute; top:-14px; left:50%; transform:translateX(-50%); width:12px; height:18px; background:radial-gradient(circle at 50% 80%,#fff 0%,#fbbf24 30%,#f59e0b 60%,transparent 100%); border-radius:50% 50% 50% 50%/60% 60% 40% 40%; animation:flicker .3s ease-in-out infinite alternate; box-shadow:0 0 20px 4px rgba(251,191,36,.6); }
-.candle.extinguished .flame { display:none; }
-@keyframes flicker { 0%{transform:translateX(-50%) scale(1) rotate(-2deg)} 100%{transform:translateX(-50%) scale(1.1) rotate(2deg)} }
-.cake-instruction { color:var(--muted); font-size:.9rem; margin-bottom:20px; }
-.cake-message { color:var(--orchid); font-size:1.2rem; margin:20px 0; min-height:30px; }
-.cake-wishes { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; margin-top:20px; }
-.cake-wish { background:rgba(245,201,232,.05); border:1px solid rgba(245,201,232,.1); border-radius:12px; padding:20px; }
-.cake-wish .title { color:var(--rose); font-weight:600; margin-bottom:8px; }
-.cake-wish .text { color:var(--muted); font-size:.85rem; line-height:1.6; }
+/* ---------- cake ---------- */
+.cake-section{text-align:center}
+.cake-stage{position:relative;display:grid;place-items:center;min-height:400px;margin-bottom:8px;perspective:1000px}
+.cake-glow{position:absolute;width:min(520px,86vw);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(251,191,36,.16),rgba(216,180,254,.14) 40%,transparent 68%);filter:blur(24px);transition:opacity 1s,transform 1s;opacity:.5}
+.cake-stage.done .cake-glow{opacity:1;transform:scale(1.18)}
+.cake{position:relative;width:280px;height:330px;transform-style:preserve-3d;transition:transform .8s var(--ease)}
+.cake-stage.done .cake{transform:translateY(-6px)}
+.cake .plate{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);width:330px;height:26px;border-radius:50%;
+  background:radial-gradient(ellipse at 50% 40%,#3b2158,#1a0f2b 70%);box-shadow:0 26px 50px -18px rgba(0,0,0,.9)}
+.tier{position:absolute;left:50%;transform:translateX(-50%);border-radius:14px 14px 8px 8px;overflow:hidden;
+  box-shadow:inset 0 -12px 22px rgba(0,0,0,.35),0 12px 30px -14px rgba(0,0,0,.8)}
+.tier .body{position:absolute;inset:0;background-size:22px 22px}
+.tier .frosting{position:absolute;top:0;left:0;right:0;height:30px;
+  background:linear-gradient(180deg,#fbeaff,#e6ccff 60%,#cfa9f5);
+  clip-path:polygon(0 0,100% 0,100% 52%,93% 100%,86% 52%,79% 100%,72% 52%,65% 100%,58% 52%,51% 100%,44% 52%,37% 100%,30% 52%,23% 100%,16% 52%,9% 100%,2% 52%,0 52%)}
+.tier.t1{bottom:18px;width:280px;height:100px}
+.tier.t1 .body{background:
+  linear-gradient(180deg,#4a2a6b,#341c4d 60%,#2a1740),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 2px,transparent 2px 22px)}
+.tier.t2{bottom:118px;width:214px;height:78px}
+.tier.t2 .body{background:linear-gradient(180deg,#583478,#3d2159 60%,#2e1947)}
+.tier.t3{bottom:196px;width:150px;height:62px}
+.tier.t3 .body{background:linear-gradient(180deg,#6a4190,#4a2a6b 60%,#38204f)}
+.tier .dots{position:absolute;inset:34px 0 0;background-image:radial-gradient(circle,rgba(245,201,232,.55) 1.6px,transparent 1.8px);background-size:26px 26px;opacity:.55}
+.candle{position:absolute;bottom:258px;width:11px;height:52px;border-radius:6px;cursor:pointer;border:none;background:none;padding:0;
+  background-image:linear-gradient(180deg,#fdf6ff,#e3c9ff 40%,#c9a7ff);box-shadow:inset -3px 0 6px rgba(0,0,0,.18);z-index:4;transition:transform .3s var(--ease);touch-action:manipulation}
+.candle:hover{transform:translateY(-3px)}
+.candle::after{content:"";position:absolute;inset:-22px -16px;border-radius:10px}
+.candle::before{content:"";position:absolute;left:50%;top:-8px;transform:translateX(-50%);width:2px;height:9px;background:#4a2f66}
+.candle .flame{position:absolute;left:50%;bottom:100%;width:16px;height:26px;transform:translateX(-50%);
+  background:radial-gradient(circle at 50% 78%,#fff 0 22%,#ffe08a 38%,#fbbf24 62%,rgba(245,158,11,.35) 80%,transparent 100%);
+  border-radius:50% 50% 46% 46%/62% 62% 38% 38%;animation:flicker .28s ease-in-out infinite alternate;
+  filter:drop-shadow(0 0 14px rgba(251,191,36,.85));transition:opacity .3s,transform .3s}
+.candle .smoke{position:absolute;left:50%;bottom:calc(100% + 4px);width:14px;height:14px;border-radius:50%;background:rgba(230,220,245,.6);filter:blur(5px);opacity:0}
+.candle.out{cursor:default}
+.candle.out .flame{opacity:0;transform:translateX(-50%) scale(.2)}
+.candle.out .smoke{animation:smoke 1.6s ease-out forwards}
+.candle.c1{left:calc(50% - 52px)}
+.candle.c2{left:calc(50% - 5.5px)}
+.candle.c3{left:calc(50% + 41px)}
+.spark{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff8d8;box-shadow:0 0 10px 2px rgba(251,191,36,.9);pointer-events:none;z-index:5;animation:spark .8s ease-out forwards}
+.cake-status{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0 6px;color:var(--muted);font-size:.86rem}
+.cake-status .dots{display:flex;gap:7px}
+.cake-status .dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(216,180,254,.5);transition:background .4s,box-shadow .4s,transform .4s}
+.cake-status .dot.on{background:var(--orchid);box-shadow:0 0 12px rgba(216,180,254,.9);transform:scale(1.2)}
+.cake-note{color:rgba(185,168,207,.7);font-size:.78rem;letter-spacing:.02em}
+.wishes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:34px;text-align:left}
+.js .wish-card{opacity:0}
+.wish-card{position:relative;padding:24px;border-radius:18px;border:1px solid rgba(216,180,254,.18);
+  background:linear-gradient(165deg,rgba(216,180,254,.1),rgba(245,201,232,.04));overflow:hidden;transition:transform .4s var(--ease),border-color .4s}
+.wish-card:hover{transform:translateY(-5px);border-color:rgba(216,180,254,.4)}
+.wish-card .num{font-family:var(--serif);font-size:2.4rem;line-height:1;color:rgba(216,180,254,.35);margin-bottom:6px}
+.wish-card h3{font-family:var(--sans);font-size:.95rem;font-weight:600;color:var(--rose);margin-bottom:8px;letter-spacing:.01em}
+.wish-card p{color:var(--muted);font-size:.87rem;line-height:1.7}
+.wish-card::after{content:"";position:absolute;inset:0;background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.09),transparent 60%);opacity:0;transition:opacity .4s}
+.wish-card:hover::after{opacity:1}
+.wishes-grid.show .wish-card{animation:fade-up .8s var(--ease) forwards;animation-delay:calc(var(--i) * .14s)}
+.continue-wrap{margin-top:30px;opacity:0;transform:translateY(12px);transition:opacity .8s .5s,transform .8s .5s}
+.continue-wrap.show{opacity:1;transform:none}
 
-/* Finale */
-.finale { text-align:center; padding:80px 20px; position:relative; overflow:hidden; }
-.finale h2 { font-size:clamp(2rem,5vw,3.5rem); color:var(--lavender); margin-bottom:20px; }
-.finale p { color:var(--muted); line-height:1.8; max-width:600px; margin:0 auto 16px; }
-.finale .signature { font-family:'Great Vibes',cursive; font-size:2rem; color:var(--orchid); margin-top:30px; }
-.finale .celebrate-btn { padding:14px 32px; border-radius:999px; background:linear-gradient(135deg,#e9e0ff,#f7d9f4); color:var(--plum); font-weight:500; border:none; cursor:pointer; margin:20px 8px; box-shadow:0 20px 60px -20px rgba(200,160,255,.9); transition:transform .2s; }
-.finale .celebrate-btn:hover { transform:scale(1.02); }
-.finale .top-btn { padding:14px 32px; border-radius:999px; background:transparent; border:1px solid var(--border); color:var(--lavender); cursor:pointer; margin:20px 8px; transition:background .2s; }
-.finale .top-btn:hover { background:rgba(255,255,255,.05); }
-.finale .footer-text { margin-top:60px; padding-top:30px; border-top:1px solid var(--border); color:var(--muted); font-size:.8rem; }
+/* ---------- memories ---------- */
+.masonry{columns:3;column-gap:18px}
+@media(max-width:980px){.masonry{columns:2}}
+@media(max-width:620px){.masonry{columns:1}}
+.memory-card{position:relative;break-inside:avoid;margin-bottom:18px;border-radius:18px;overflow:hidden;cursor:zoom-in;
+  border:1px solid rgba(216,180,254,.14);background:rgba(255,255,255,.03);
+  transition:transform .5s var(--ease),border-color .5s,box-shadow .5s}
+.memory-card img{width:100%;height:auto;transition:transform .8s var(--ease),filter .6s;filter:saturate(.92) contrast(1.02)}
+.memory-card:hover{transform:translateY(-6px);border-color:rgba(216,180,254,.4);box-shadow:0 30px 60px -30px rgba(0,0,0,.9),0 0 40px -20px rgba(200,160,255,.55)}
+.memory-card:hover img{transform:scale(1.06);filter:saturate(1.05) contrast(1.04)}
+.memory-card .cap{position:absolute;inset:auto 0 0 0;padding:34px 16px 14px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;
+  background:linear-gradient(180deg,transparent,rgba(9,4,16,.82));opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.memory-card:hover .cap,.memory-card:focus-visible .cap{opacity:1;transform:none}
+.memory-card .cap p{font-family:var(--serif);font-size:1.02rem;color:var(--lavender)}
+.memory-card .cap span{font-size:.65rem;letter-spacing:.24em;color:var(--muted)}
+.memory-card .zoom{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(13,6,23,.6);border:1px solid rgba(216,180,254,.25);opacity:0;transform:scale(.85);transition:.4s}
+.memory-card:hover .zoom{opacity:1;transform:none}
+.memory-card .zoom svg{width:14px;height:14px;stroke:var(--lavender);fill:none;stroke-width:2}
+@media(hover:none){
+  .memory-card .cap{opacity:1;transform:none}
+  .memory-card .zoom{display:none}
+  .wish-card:hover,.memory-card:hover,.art-frame:hover,.btn:hover{transform:none}
+}
 
-/* Confetti */
-.confetti-piece { position:fixed; top:-4vh; width:10px; height:14px; border-radius:2px; animation:confetti-fall linear forwards; will-change:transform; z-index:1000; pointer-events:none; }
+/* ---------- artwork ---------- */
+.art-frame{position:relative;max-width:640px;margin:0 auto;border-radius:24px;padding:14px;cursor:zoom-in;
+  background:linear-gradient(150deg,rgba(216,180,254,.4),rgba(245,201,232,.16) 45%,rgba(216,180,254,.08));
+  box-shadow:0 50px 90px -50px rgba(0,0,0,.95),0 0 70px -30px rgba(200,160,255,.4);transition:transform .6s var(--ease)}
+.art-frame:hover{transform:translateY(-6px) scale(1.01)}
+.art-frame .inner{position:relative;border-radius:14px;overflow:hidden;background:#0d0617}
+.art-frame img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;transition:transform .9s var(--ease)}
+.art-frame:hover img{transform:scale(1.04)}
+.art-frame .spot{position:absolute;inset:0;background:radial-gradient(340px circle at var(--mx,50%) var(--my,30%),rgba(255,255,255,.18),transparent 62%);opacity:0;transition:opacity .5s;pointer-events:none}
+.art-frame:hover .spot{opacity:1}
+.art-meta{max-width:640px;margin:26px auto 0;text-align:center}
+.art-meta h3{font-size:clamp(1.4rem,3vw,1.9rem);color:var(--lavender);margin-bottom:6px}
+.art-meta .sub{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(216,180,254,.7);margin-bottom:14px}
+.art-meta p{color:var(--muted);line-height:1.8;font-size:.94rem;max-width:52ch;margin-inline:auto}
 
-/* Cursor glow */
-.cursor-glow { position:fixed; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(216,180,254,.5) 0%,transparent 65%); filter:blur(40px); pointer-events:none; z-index:150; transform:translate(-50%,-50%); transition:opacity .3s; }
+/* ---------- envelope + letter ---------- */
+.envelope-section{max-width:980px}
+.env-scene{display:flex;flex-direction:column;align-items:center;perspective:1400px;margin-top:10px}
+.envelope{position:relative;width:min(430px,84vw);aspect-ratio:1.5;border:none;background:none;cursor:pointer;padding:0;
+  filter:drop-shadow(0 40px 60px rgba(0,0,0,.75));transition:transform .8s var(--ease),opacity .6s;transform-style:preserve-3d}
+.envelope:hover{transform:translateY(-6px)}
+.envelope.open{cursor:default;transform:translateY(-4px) scale(.96)}
+.env-layer{position:absolute;inset:0;border-radius:12px}
+.env-back{background:linear-gradient(160deg,#3a2155,#22123a);box-shadow:inset 0 0 0 1px rgba(216,180,254,.14)}
+.env-paper{position:absolute;left:8%;right:8%;top:12%;bottom:16%;border-radius:6px;background:linear-gradient(180deg,#fdf8f1,#efe3d2);
+  transform:translateY(12%);transition:transform .8s var(--ease);box-shadow:0 -8px 24px rgba(0,0,0,.35)}
+.envelope.open .env-paper{transform:translateY(-46%)}
+.env-pocket{background:linear-gradient(160deg,#4b2c6d,#2c1844);clip-path:polygon(0 0,50% 46%,100% 0,100% 100%,0 100%);z-index:3}
+.env-pocket::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.06),transparent 40%)}
+.env-flap{position:absolute;inset:0 0 auto;height:64%;background:linear-gradient(180deg,#5b367f,#3a2155);
+  clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform .95s var(--ease),z-index 0s .45s;z-index:4;backface-visibility:hidden}
+.envelope.open .env-flap{transform:rotateX(-176deg);z-index:1}
+.env-flap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.09),transparent 55%)}
+.env-seal{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;z-index:5;
+  display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#f0b7d6,#c2608f 55%,#8e3c63);
+  box-shadow:0 10px 26px rgba(0,0,0,.55),inset 0 0 12px rgba(255,255,255,.28);transition:opacity .4s,transform .5s}
+.env-seal svg{width:24px;height:24px;fill:#4b1531}
+.envelope.open .env-seal{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+.env-hint{position:absolute;left:0;right:0;bottom:-46px;text-align:center;font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(216,180,254,.8);
+  animation:fade-in .6s .8s both}
+.envelope.open .env-hint{opacity:0;animation:none}
+.env-shadow{width:min(430px,84vw);height:26px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.6),transparent 70%);margin-top:16px;transition:transform .8s,opacity .8s}
+.envelope.open + .env-shadow{transform:scale(.85);opacity:.6}
+.letter-shell{display:grid;grid-template-rows:0fr;width:100%;max-width:760px;transition:grid-template-rows 1s var(--ease),opacity .6s;opacity:0;margin-top:0;scroll-margin-top:96px}
+.letter-shell.open{grid-template-rows:1fr;opacity:1;margin-top:44px}
+.letter-inner{overflow:hidden;min-height:0}
+.letter{position:relative;background:linear-gradient(180deg,var(--paper),#efe3d3);color:var(--ink);border-radius:6px;padding:clamp(26px,5vw,56px);
+  box-shadow:0 60px 90px -50px rgba(0,0,0,.9),inset 0 0 60px rgba(180,150,120,.12);
+  transform:translateY(24px) rotate(-.6deg);transition:transform 1.1s var(--ease)}
+.letter-shell.open .letter{transform:none}
+.letter::before{content:"";position:absolute;inset:14px;border:1px solid rgba(120,85,140,.18);border-radius:3px;pointer-events:none}
+.letter .stamp{position:absolute;top:18px;right:18px;width:74px;height:88px;border:1px dashed rgba(120,85,140,.4);border-radius:4px;
+  display:grid;place-items:center;transform:rotate(3deg);background:rgba(255,255,255,.35)}
+.letter .stamp svg{width:34px;height:40px;color:#8e5aa8}
+.letter .greeting{font-family:var(--script);font-size:clamp(1.8rem,4vw,2.4rem);color:#5c3178;margin-bottom:18px}
+.letter p{font-family:var(--serif);font-size:clamp(1.02rem,1.9vw,1.16rem);line-height:1.9;color:#412a52;margin-bottom:16px}
+.letter .poem{margin:26px 0;padding:22px 26px;border-left:3px solid #b083d6;background:rgba(150,110,190,.09);border-radius:0 10px 10px 0}
+.letter .poem .t{font-family:var(--script);font-size:1.5rem;color:#7a3f9c;margin-bottom:8px}
+.letter .poem span{display:block;font-family:var(--serif);font-style:italic;font-size:1.05rem;line-height:1.9;color:#4a2f60}
+.letter .closing{font-family:var(--script);font-size:1.7rem;color:#6b3a8c;margin-top:26px}
+.letter .sign{font-family:var(--script);font-size:1.9rem;color:#4b2b66}
+.letter .close-letter{margin-top:26px;background:rgba(90,50,120,.08);border:1px solid rgba(120,85,140,.3);color:#5c3178;
+  border-radius:99px;padding:10px 22px;font-size:.78rem;letter-spacing:.08em;cursor:pointer;transition:background .3s,transform .3s}
+.letter .close-letter:hover{background:rgba(90,50,120,.16);transform:translateY(-1px)}
+@media(max-width:640px){.letter{transform:none}.letter .stamp{width:56px;height:68px;top:12px;right:12px}}
 
-/* Scroll progress */
-.scroll-progress { position:fixed; top:0; left:0; height:2px; background:linear-gradient(90deg,var(--orchid),var(--rose)); z-index:100; transition:width .1s; }
+/* ---------- song ---------- */
+.song-wrap{display:grid;grid-template-columns:auto 1fr;gap:clamp(28px,5vw,60px);align-items:center;max-width:880px;margin:0 auto}
+@media(max-width:820px){.song-wrap{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.vinyl-wrap{position:relative;width:min(320px,74vw);aspect-ratio:1;display:grid;place-items:center}
+.vinyl-ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--orchid) var(--p,0%),rgba(216,180,254,.14) 0);
+  -webkit-mask:radial-gradient(circle,transparent 66%,#000 67%);mask:radial-gradient(circle,transparent 66%,#000 67%);transition:background .2s}
+.vinyl{position:relative;width:86%;aspect-ratio:1;border-radius:50%;background:
+  repeating-radial-gradient(circle at 50% 50%,#150c22 0 2px,#0f0818 2px 4px);
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.95),inset 0 0 40px rgba(0,0,0,.9);display:grid;place-items:center}
+.vinyl::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(130deg,rgba(255,255,255,.16),transparent 40%,transparent 60%,rgba(255,255,255,.08));pointer-events:none}
+.vinyl.spinning{animation:spin 16s linear infinite}
+.vinyl .sleeve{width:56%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:0 0 30px rgba(0,0,0,.6)}
+.vinyl .sleeve img{width:100%;height:100%;object-fit:cover}
+.vinyl .hole{position:absolute;width:22px;height:22px;border-radius:50%;background:#0b0513;border:1px solid rgba(255,255,255,.18);z-index:2}
+.tonearm{position:absolute;right:-2%;top:2%;width:34%;height:34%;transform-origin:82% 18%;transform:rotate(-18deg);transition:transform .9s var(--ease);pointer-events:none;z-index:3}
+.tonearm::before{content:"";position:absolute;right:0;top:0;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e9e0ff,#8a6bb0)}
+.tonearm::after{content:"";position:absolute;right:5px;top:9px;width:4px;height:74%;border-radius:4px;background:linear-gradient(180deg,#cbb8e6,#6f4e93);transform:rotate(24deg);transform-origin:top right;box-shadow:0 6px 14px rgba(0,0,0,.6)}
+.tonearm.on{transform:rotate(6deg)}
+.song-info{max-width:420px}
+.song-info h3{font-size:clamp(1.7rem,3.4vw,2.3rem);color:var(--lavender);margin-bottom:6px}
+.song-info .artist{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(216,180,254,.75);margin-bottom:16px}
+.song-info .note{color:var(--muted);line-height:1.8;font-size:.92rem;margin-bottom:22px}
+.player{display:flex;align-items:center;gap:16px}
+.play-btn{width:58px;height:58px;flex:none;border-radius:50%;border:none;cursor:pointer;display:grid;place-items:center;
+  background:linear-gradient(135deg,#f4edff,#e0c9ff 50%,#f7d9f4);box-shadow:0 18px 40px -16px rgba(230,205,255,.9);transition:transform .3s}
+.play-btn:hover{transform:scale(1.06)}
+.play-btn:active{transform:scale(.96)}
+.play-btn svg{width:20px;height:20px;fill:var(--plum)}
+.play-btn .pause-ic{display:none}
+.play-btn.playing .play-ic{display:none}
+.play-btn.playing .pause-ic{display:block}
+.player-main{flex:1;min-width:0}
+.seek{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:99px;background:rgba(216,180,254,.2);outline:none;cursor:pointer}
+.seek::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#fff,#d8b4fe);box-shadow:0 0 12px rgba(216,180,254,.9);cursor:grab}
+.seek::-moz-range-thumb{width:14px;height:14px;border:none;border-radius:50%;background:#e9e0ff;box-shadow:0 0 12px rgba(216,180,254,.9)}
+.time{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-top:8px;font-variant-numeric:tabular-nums}
+.eq{display:flex;gap:3px;align-items:flex-end;height:20px;margin-left:8px}
+.eq i{width:3px;height:100%;border-radius:2px;background:linear-gradient(180deg,var(--rose),var(--orchid));transform-origin:bottom;transform:scaleY(.25);opacity:.4;transition:opacity .3s}
+.play-btn.playing ~ .player-main .eq i,.eq.playing i{opacity:1;animation:eq .9s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:.15s}.eq i:nth-child(3){animation-delay:.3s}.eq i:nth-child(4){animation-delay:.45s}.eq i:nth-child(5){animation-delay:.6s}
 
-/* Reveal animations */
-.reveal { opacity:0; transform:translateY(30px); transition:opacity .8s, transform .8s; }
-.reveal.visible { opacity:1; transform:translateY(0); }
+/* ---------- finale ---------- */
+.finale{text-align:center;position:relative;overflow:hidden;padding-block:clamp(80px,12vw,150px)}
+.finale .halo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(760px,120vw);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(216,180,254,.16),transparent 62%);filter:blur(20px);pointer-events:none}
+.finale h2{font-size:clamp(2.2rem,6vw,4.2rem);color:var(--lavender);margin-bottom:22px;position:relative}
+.finale p{color:var(--muted);line-height:1.9;max-width:60ch;margin:0 auto 16px;position:relative}
+.finale .signature{font-family:var(--script);font-size:clamp(1.7rem,4vw,2.4rem);color:var(--orchid);margin-top:30px}
+.finale .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px;position:relative}
+.finale .foot{margin-top:64px;padding-top:28px;border-top:1px solid rgba(216,180,254,.12);color:rgba(185,168,207,.7);font-size:.78rem;position:relative}
+.finale .foot .heart{color:var(--rose)}
 
-/* Responsive */
-@media(max-width:768px){
-  .opening .content { grid-template-columns:1fr; text-align:center; }
-  .memories-grid { grid-template-columns:1fr; }
-  .site-nav { gap:2px; padding:8px; }
-  .site-nav a { padding:6px 10px; font-size:.75rem; }
+/* ---------- lightbox ---------- */
+.lightbox{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:clamp(14px,4vw,48px);
+  background:rgba(8,4,14,.9);backdrop-filter:blur(18px);opacity:0;pointer-events:none;transition:opacity .4s}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lightbox figure{position:relative;max-width:min(1000px,100%);max-height:86vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .5s var(--ease)}
+.lightbox.open figure{transform:none}
+.lightbox img{max-width:100%;max-height:74vh;width:auto;border-radius:12px;box-shadow:0 40px 90px -30px rgba(0,0,0,.95);object-fit:contain}
+.lightbox figcaption{color:var(--lavender);font-family:var(--serif);font-size:1.1rem;text-align:center}
+.lightbox .counter{color:var(--muted);font-size:.7rem;letter-spacing:.28em}
+.lb-btn{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid rgba(216,180,254,.25);
+  background:rgba(20,10,34,.7);display:grid;place-items:center;cursor:pointer;transition:background .3s,transform .3s}
+.lb-btn:hover{background:rgba(216,180,254,.18);transform:translateY(-50%) scale(1.06)}
+.lb-btn svg{width:18px;height:18px;stroke:var(--lavender);fill:none;stroke-width:2}
+.lb-prev{left:-4px}.lb-next{right:-4px}
+@media(max-width:760px){.lb-prev{left:0}.lb-next{right:0}}
+.lb-close{position:fixed;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(216,180,254,.25);
+  background:rgba(20,10,34,.7);display:grid;place-items:center;cursor:pointer}
+.lb-close svg{width:18px;height:18px;stroke:var(--lavender);fill:none;stroke-width:2}
+.confetti-layer{position:fixed;inset:0;z-index:85;pointer-events:none;overflow:hidden}
+.confetti-piece{position:absolute;top:-6vh;border-radius:2px;animation:confetti linear forwards;will-change:transform}
+.heart{position:absolute;bottom:-6vh;font-size:18px;color:var(--rose);animation:heart-rise linear forwards;will-change:transform}
+
+/* ---------- reduced motion ---------- */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .ambient .nebula,.ambient .mist,.ambient .orb,.star,.petal,.marquee-track,.tonearm,
+  .gate-portrait .halo,.gate-portrait .ring{animation:none!important}
+  .js .reveal{opacity:1!important;transform:none!important}
+  .js .wish-card{opacity:1!important}
+  .letter,.lightbox figure,.vinyl{transition:none!important}
+  .vinyl.spinning{animation:none!important}
 }
 </style>
 </head>
-<body>
+<body class="locked">
 
-<!-- Ambient Background -->
-<div class="ambient" id="ambient">
-  <div class="nebula"></div>
-  <div class="mist"></div>
-  <div class="glow1"></div>
-  <div class="glow2"></div>
-  <div class="glow3"></div>
-</div>
+<div class="grain" aria-hidden="true"></div>
+<div class="ambient" id="ambient" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
-<!-- Scroll Progress -->
-<div class="scroll-progress" id="scrollProgress"></div>
-
-<!-- Cursor Glow -->
-<div class="cursor-glow" id="cursorGlow" style="opacity:0"></div>
-
-<!-- Opening Gate -->
-<div class="opening" id="opening">
-  <div class="content">
-    <div>
-      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;opacity:0;animation:fadeIn .9s .1s forwards">
-        <svg viewBox="0 0 200 240" fill="none" aria-hidden="true" style="width:56px;height:56px;flex-shrink:0;color:rgba(216,180,254,.9)">
-          <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-            <path d="M100 100 C100 150 96 185 100 228" opacity="0.45"></path>
-            <path d="M100 168 C84 158 66 160 54 172 C68 184 88 182 100 172Z" opacity="0.35"></path>
-            <path d="M100 196 C116 186 136 188 148 200 C132 212 112 210 100 200Z" opacity="0.3"></path>
-            <g style="animation:bloom 1.2s cubic-bezier(0.2,0.8,0.2,1) both;animation-delay:0ms"><ellipse cx="100" cy="40" rx="29" ry="47" transform="rotate(0 100 94)" fill="currentColor" fill-opacity="0.1"></ellipse></g>
-            <g style="animation:bloom 1.2s cubic-bezier(0.2,0.8,0.2,1) both;animation-delay:110ms"><ellipse cx="100" cy="40" rx="29" ry="47" transform="rotate(72 100 94)" fill="currentColor" fill-opacity="0.1"></ellipse></g>
-            <g style="animation:bloom 1.2s cubic-bezier(0.2,0.8,0.2,1) both;animation-delay:220ms"><ellipse cx="100" cy="40" rx="29" ry="47" transform="rotate(144 100 94)" fill="currentColor" fill-opacity="0.1"></ellipse></g>
-            <g style="animation:bloom 1.2s cubic-bezier(0.2,0.8,0.2,1) both;animation-delay:330ms"><ellipse cx="100" cy="40" rx="29" ry="47" transform="rotate(216 100 94)" fill="currentColor" fill-opacity="0.1"></ellipse></g>
-            <g style="animation:bloom 1.2s cubic-bezier(0.2,0.8,0.2,1) both;animation-delay:440ms"><ellipse cx="100" cy="40" rx="29" ry="47" transform="rotate(288 100 94)" fill="currentColor" fill-opacity="0.1"></ellipse></g>
-            <path d="M100 78 C111 86 116 100 108 112 C104 118 96 118 92 112 C84 100 89 86 100 78Z" fill="currentColor" fill-opacity="0.22"></path>
-            <circle cx="100" cy="97" r="5.5" fill="currentColor" fill-opacity="0.55"></circle>
+<!-- ============================ OPENING ============================ -->
+<div class="gate" id="gate">
+  <div class="gate-inner">
+    <div class="gate-copy">
+      <p class="kicker">
+        <svg viewBox="0 0 200 240" fill="none" aria-hidden="true">
+          <g stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <path d="M100 96 C100 148 96 188 100 230" opacity=".45"/>
+            <path d="M100 168 C84 158 66 160 54 172 C68 184 88 182 100 172Z" opacity=".35"/>
+            <path d="M100 198 C116 188 136 190 148 202 C132 214 112 212 100 202Z" opacity=".3"/>
+            <g style="animation:bloom 1.1s var(--ease) both"><ellipse cx="100" cy="40" rx="28" ry="46" transform="rotate(0 100 94)" fill="currentColor" fill-opacity=".12"/></g>
+            <g style="animation:bloom 1.1s .1s var(--ease) both"><ellipse cx="100" cy="40" rx="28" ry="46" transform="rotate(72 100 94)" fill="currentColor" fill-opacity=".12"/></g>
+            <g style="animation:bloom 1.1s .2s var(--ease) both"><ellipse cx="100" cy="40" rx="28" ry="46" transform="rotate(144 100 94)" fill="currentColor" fill-opacity=".12"/></g>
+            <g style="animation:bloom 1.1s .3s var(--ease) both"><ellipse cx="100" cy="40" rx="28" ry="46" transform="rotate(216 100 94)" fill="currentColor" fill-opacity=".12"/></g>
+            <g style="animation:bloom 1.1s .4s var(--ease) both"><ellipse cx="100" cy="40" rx="28" ry="46" transform="rotate(288 100 94)" fill="currentColor" fill-opacity=".12"/></g>
+            <path d="M100 78 C111 86 116 100 108 112 C104 118 96 118 92 112 C84 100 89 86 100 78Z" fill="currentColor" fill-opacity=".22"/>
+            <circle cx="100" cy="97" r="5.5" fill="currentColor" fill-opacity=".6"/>
           </g>
         </svg>
-        <p style="font-size:.7rem;text-transform:uppercase;letter-spacing:.4em;color:rgba(216,180,254,.75)">a little garden I grew for you</p>
+        a little garden I grew for you
+      </p>
+      <h1>Tiara</h1>
+      <div>
+        <p class="script">Happy Birthday, Tiara!</p>
+        <p class="lede">Di antara semua hal indah yang pernah ada, aku bersyukur semesta mempertemukan aku denganmu. Masuk sebentar ya — ada taman kecil yang kusiapkan.</p>
       </div>
-      <h1 style="opacity:0;animation:fadeIn 1.1s .1s forwards">Tiara</h1>
-      <div style="opacity:0;animation:fadeIn .9s .22s forwards">
-        <p style="font-family:'Great Vibes',cursive;font-size:clamp(1.5rem,4vw,2.6rem);color:var(--lavender);margin-bottom:12px">Happy Birthday, Tiara!</p>
-        <p style="color:var(--muted);font-size:clamp(.9rem,2vw,1.1rem);line-height:1.6;max-width:500px">Di antara semua hal indah yang pernah ada, aku bersyukur semesta mempertemukan aku denganmu.</p>
-      </div>
-      <div style="margin-top:32px;opacity:0;animation:fadeIn .9s .34s forwards">
-        <button class="cta" onclick="openSite()">Open Your Little Surprise <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></button>
-        <p style="color:var(--muted);font-size:.8rem;margin-top:12px">Nikmati perlahan — sebaiknya dengan suara menyala ♡</p>
-      </div>
-    </div>
-    <div style="opacity:0;animation:fadeIn .9s .42s forwards">
-      <div class="portrait-frame">
-        <div class="glow"></div>
-        <div class="frame">
-          <img src="images/tiara/prabowo.webp" alt="Tiara" />
-        </div>
-        <p class="caption">the loveliest person I know</p>
+      <div class="cta-row">
+        <button class="btn" id="enterBtn" type="button">
+          Buka kejutanmu
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+        </button>
+        <p class="hint">Nikmati perlahan — sebaiknya dengan suara menyala ♡</p>
       </div>
     </div>
+    <figure class="gate-portrait">
+      <span class="halo"></span><span class="ring"></span>
+      <span class="badge">untukmu</span>
+      <img src="images/tiara/opening.webp" alt="Tiara" width="576" height="1024">
+      <figcaption>the loveliest person I know</figcaption>
+      <span class="spark" style="left:8%;top:16%;animation-delay:.2s"></span>
+      <span class="spark" style="right:4%;top:42%;animation-delay:1.4s"></span>
+      <span class="spark" style="left:16%;bottom:12%;animation-delay:2.2s"></span>
+    </figure>
   </div>
 </div>
 
-<!-- Main Site -->
-<div id="mainSite" style="display:none">
-  <nav class="site-nav">
-    <a href="#pesan">Pesan</a>
-    <a href="#kenangan">Kenangan</a>
-    <a href="#karya">Karya</a>
-    <a href="#surat">Surat</a>
-    <a href="#lagu">Lagu</a>
-    <a href="#penutup">Penutup</a>
+<!-- ============================ SITE ============================ -->
+<div class="site" id="site" aria-hidden="true" inert>
+  <nav class="nav" aria-label="Bagian halaman">
+    <div class="nav-inner">
+      <a href="#pesan">Pesan</a>
+      <a href="#kue">Kue</a>
+      <a href="#kenangan">Kenangan</a>
+      <a href="#karya">Karya</a>
+      <a href="#surat">Surat</a>
+      <a href="#lagu">Lagu</a>
+      <a href="#penutup">Penutup</a>
+    </div>
   </nav>
 
-  <main class="main-content">
-    <!-- Message Section -->
-    <section class="content-section" id="pesan">
-      <div class="section-header reveal">
+  <main>
+    <!-- ---------- PESAN ---------- -->
+    <section class="section" id="pesan">
+      <div class="section-head reveal">
         <p class="eyebrow">for your special day</p>
-        <h2 class="section-title">Selamat Ulang Tahun, Sayang</h2>
+        <h2>Selamat Ulang Tahun, Sayang</h2>
       </div>
-      <div class="reveal">
-        <p>Hari ini tentang kamu: tentang tawa yang selalu berhasil membuat hariku lebih ringan, tentang hati yang selalu punya ruang untuk orang lain, dan tentang cara kamu melihat dunia — lembut, jujur, dan penuh warna.</p>
-        <p>Terima kasih sudah tumbuh menjadi manusia seindah ini. Terima kasih untuk semua hal kecil yang mungkin tidak kamu sadari: pesan-pesan singkat, cerita sebelum tidur, dan caramu mengingat hal-hal yang aku suka.</p>
-        <p>Aku berharap tahun ini membawa lebih banyak hal yang membuatmu bangga pada dirimu sendiri. Dan kalau suatu hari dunia terasa berat, semoga kamu ingat bahwa ada seseorang yang selalu memilihmu, dengan seluruh hatinya.</p>
-      </div>
-      <div class="wishes">
-        <div class="wish reveal"><p class="wish-title">Tumbuh Bahagia</p><p class="wish-text">Semoga kamu selalu dikelilingi hal-hal yang membuatmu merasa aman, dicintai, dan cukup.</p></div>
-        <div class="wish reveal"><p class="wish-title">Mimpi yang Menjadi</p><p class="wish-text">Semoga setiap hal yang kamu doakan diam-diam menemukan jalannya untuk nyata tahun ini.</p></div>
-        <div class="wish reveal"><p class="wish-title">Selalu Dikagumi</p><p class="wish-text">Untuk semua versi dirimu — yang kuat, yang rapuh, yang sedang belajar. Semuanya berharga.</p></div>
+      <div class="message">
+        <div class="prose">
+          <p class="reveal" style="--d:.05s">Hari ini tentang kamu: tentang tawa yang selalu berhasil membuat hariku lebih ringan, tentang hati yang selalu punya ruang untuk orang lain, dan tentang cara kamu melihat dunia — lembut, jujur, dan penuh warna.</p>
+          <p class="reveal" style="--d:.12s">Terima kasih sudah tumbuh menjadi manusia seindah ini. Terima kasih untuk semua hal kecil yang mungkin tidak kamu sadari: pesan-pesan singkat, cerita sebelum tidur, dan caramu mengingat hal-hal yang aku suka.</p>
+          <p class="reveal" style="--d:.19s">Aku berharap tahun ini membawa lebih banyak hal yang membuatmu bangga pada dirimu sendiri. Dan kalau suatu hari dunia terasa berat, semoga kamu ingat bahwa ada seseorang yang selalu memilihmu, dengan seluruh hatinya.</p>
+        </div>
+        <aside class="quote-card reveal right" style="--d:.2s">
+          <span class="shine"></span>
+          <p>Kalau semesta mengizinkan aku memilih satu hal untuk kusyukuri seumur hidup, aku akan memilih pertemuan ini.</p>
+          <span>— untuk Tiara</span>
+        </aside>
       </div>
     </section>
 
-    <!-- Cake Section -->
-    <section class="content-section" id="kue">
-      <div class="section-header reveal" style="text-align:center">
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>selamat ulang tahun</span><span>tawa yang ringan</span><span>rumah yang tenang</span><span>tiara</span><span>selalu, kamu</span>
+        <span>selamat ulang tahun</span><span>tawa yang ringan</span><span>rumah yang tenang</span><span>tiara</span><span>selalu, kamu</span>
+      </div>
+    </div>
+
+    <!-- ---------- KUE ---------- -->
+    <section class="section cake-section" id="kue">
+      <div class="section-head center reveal">
         <p class="eyebrow">make a wish</p>
-        <h2 class="section-title">Tiga Lilin, Tiga Keinginan</h2>
-        <p class="section-desc" style="margin:0 auto 20px">Tutup semua lilin, kemudian klik tombol continue.</p>
+        <h2>Tiga Lilin, Tiga Keinginan</h2>
+        <p>Tiup ketiga lilinnya satu per satu. Setelah semuanya padam, tiga doa ini akan muncul untukmu.</p>
       </div>
-      <div class="cake-section">
-        <div class="cake-container">
-          <div class="cake">
-            <div class="cake-top"></div>
-            <div class="cake-layer"></div>
-            <div class="cake-base"></div>
-            <div class="candle" id="candle0" style="left:90px" onclick="blowCandle(0)"><div class="flame"></div></div>
-            <div class="candle" id="candle1" style="left:116px" onclick="blowCandle(1)"><div class="flame"></div></div>
-            <div class="candle" id="candle2" style="left:142px" onclick="blowCandle(2)"><div class="flame"></div></div>
-          </div>
+
+      <div class="cake-stage" id="cakeStage">
+        <span class="cake-glow" aria-hidden="true"></span>
+        <div class="cake" id="cake" aria-label="Kue ulang tahun dengan tiga lilin">
+          <span class="plate" aria-hidden="true"></span>
+          <div class="tier t1" aria-hidden="true"><span class="body"></span><span class="frosting"></span><span class="dots"></span></div>
+          <div class="tier t2" aria-hidden="true"><span class="body"></span><span class="frosting"></span><span class="dots"></span></div>
+          <div class="tier t3" aria-hidden="true"><span class="body"></span><span class="frosting"></span><span class="dots"></span></div>
+          <button class="candle c1" type="button" aria-label="Tiup lilin 1"><span class="flame"></span><span class="smoke"></span></button>
+          <button class="candle c2" type="button" aria-label="Tiup lilin 2"><span class="flame"></span><span class="smoke"></span></button>
+          <button class="candle c3" type="button" aria-label="Tiup lilin 3"><span class="flame"></span><span class="smoke"></span></button>
         </div>
-        <p class="cake-message" id="cakeMessage"></p>
-        <div class="cake-wishes">
-          <div class="cake-wish"><p class="title">Tumbuh Bahagia</p><p class="text">Semoga kamu selalu dikelilingi hal-hal yang membuatmu merasa aman, dicintai, dan cukup.</p></div>
-          <div class="cake-wish"><p class="title">Mimpi yang Menjadi</p><p class="text">Semoga setiap hal yang kamu doakan diam-diam menemukan jalannya untuk nyata tahun ini.</p></div>
-          <div class="cake-wish"><p class="title">Selalu Dikagumi</p><p class="text">Untuk semua versi dirimu — yang kuat, yang rapuh, yang sedang belajar. Semuanya berharga.</p></div>
-        </div>
-        <button class="celebrate-btn" id="continueBtn" style="display:none;margin-top:20px" onclick="document.getElementById('kenangan').scrollIntoView({behavior:'smooth'})">Lanjutkan perjalanan kecil kita</button>
+      </div>
+
+      <div class="cake-status" aria-live="polite">
+        <span id="cakeText">0 dari 3 lilin padam</span>
+        <span class="dots" aria-hidden="true"><span class="dot" data-i="0"></span><span class="dot" data-i="1"></span><span class="dot" data-i="2"></span></span>
+      </div>
+      <p class="cake-note" id="cakeNote">Klik atau ketuk api lilinnya.</p>
+
+      <div class="wishes-grid" id="wishes">
+        <article class="wish-card" style="--i:0">
+          <p class="num">01</p>
+          <h3>Tumbuh Bahagia</h3>
+          <p>Semoga kamu selalu dikelilingi hal-hal yang membuatmu merasa aman, dicintai, dan cukup.</p>
+        </article>
+        <article class="wish-card" style="--i:1">
+          <p class="num">02</p>
+          <h3>Mimpi yang Menjadi</h3>
+          <p>Semoga setiap hal yang kamu doakan diam-diam menemukan jalannya untuk nyata tahun ini.</p>
+        </article>
+        <article class="wish-card" style="--i:2">
+          <p class="num">03</p>
+          <h3>Selalu Dikagumi</h3>
+          <p>Untuk semua versi dirimu — yang kuat, yang rapuh, yang sedang belajar. Semuanya berharga.</p>
+        </article>
+      </div>
+
+      <div class="continue-wrap" id="continueWrap">
+        <a class="btn" href="#kenangan">Lanjutkan perjalanan kecil kita
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+        </a>
       </div>
     </section>
 
-    <!-- Memories Section -->
-    <section class="content-section" id="kenangan">
-      <div class="section-header reveal">
+    <!-- ---------- KENANGAN ---------- -->
+    <section class="section" id="kenangan">
+      <div class="section-head reveal">
         <p class="eyebrow">kenangan kita</p>
-        <h2 class="section-title">Potongan Hari yang Kusimpan</h2>
-        <p class="section-desc">Potret-potret kecil yang terukir di hati.</p>
+        <h2>Potongan Hari yang Kusimpan</h2>
+        <p>Potret-potret kecil yang terukir di hati. Ketuk salah satunya untuk melihat lebih dekat.</p>
       </div>
-      <div class="memories-grid">
-        <div class="memory-card reveal"><div class="img-wrap"><img src="uploads/memories/1794192184880-whatsapp_image_2026-11-04_at_12.18.49.webp" alt="Kenangan 1" loading="lazy"/></div><div class="info"><p class="caption">Cerita kenangan pertama</p><p class="date">Juni 2024</p></div></div>
-        <div class="memory-card reveal"><div class="img-wrap"><img src="images/memories/memory-02.webp" alt="Kenangan 2" loading="lazy"/></div><div class="info"><p class="caption">Cerita kenangan kedua</p><p class="date">Juli 2024</p></div></div>
-        <div class="memory-card reveal"><div class="img-wrap"><img src="images/memories/memory-03.webp" alt="Kenangan 3" loading="lazy"/></div><div class="info"><p class="caption">Cerita kenangan ketiga</p><p class="date">Agustus 2024</p></div></div>
-        <div class="memory-card reveal"><div class="img-wrap"><img src="images/memories/memory-04.webp" alt="Kenangan 4" loading="lazy"/></div><div class="info"><p class="caption">Cerita kenangan keempat</p><p class="date">September 2024</p></div></div>
-        <div class="memory-card reveal"><div class="img-wrap"><img src="images/memories/memory-05.webp" alt="Kenangan 5" loading="lazy"/></div><div class="info"><p class="caption">Cerita kenangan kelima</p><p class="date">Oktober 2024</p></div></div>
-        <div class="memory-card reveal"><div class="img-wrap"><img src="images/memories/memory-06.webp" alt="Kenangan 6" loading="lazy"/></div><div class="info"><p class="caption">Cerita kenangan keenam</p><p class="date">November 2024</p></div></div>
+      <div class="masonry" id="masonry">
+        <figure class="memory-card reveal" data-full="images/memories/memory-01.webp" data-caption="Potret yang selalu kusimpan" tabindex="0" role="button" aria-label="Perbesar kenangan 1">
+          <img src="images/memories/memory-01.webp" alt="Kenangan Tiara 1" loading="lazy" width="1080" height="1920">
+          <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
+          <figcaption class="cap"><p>Potret yang selalu kusimpan</p><span>01</span></figcaption>
+        </figure>
+        <figure class="memory-card reveal" data-full="images/memories/memory-02.webp" data-caption="Senyum yang membuat segalanya ringan" tabindex="0" role="button" aria-label="Perbesar kenangan 2">
+          <img src="images/memories/memory-02.webp" alt="Kenangan Tiara 2" loading="lazy" width="576" height="1024">
+          <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
+          <figcaption class="cap"><p>Senyum yang membuat segalanya ringan</p><span>02</span></figcaption>
+        </figure>
+        <figure class="memory-card reveal" data-full="images/memories/memory-03.webp" data-caption="Hari yang tak ingin kulupa" tabindex="0" role="button" aria-label="Perbesar kenangan 3">
+          <img src="images/memories/memory-03.webp" alt="Kenangan Tiara 3" loading="lazy" width="1600" height="709">
+          <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
+          <figcaption class="cap"><p>Hari yang tak ingin kulupa</p><span>03</span></figcaption>
+        </figure>
+        <figure class="memory-card reveal" data-full="images/memories/memory-04.webp" data-caption="Tempat pulang paling tenang" tabindex="0" role="button" aria-label="Perbesar kenangan 4">
+          <img src="images/memories/memory-04.webp" alt="Kenangan Tiara 4" loading="lazy" width="576" height="1024">
+          <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
+          <figcaption class="cap"><p>Tempat pulang paling tenang</p><span>04</span></figcaption>
+        </figure>
+        <figure class="memory-card reveal" data-full="images/memories/memory-05.webp" data-caption="Tawa yang masih terasa" tabindex="0" role="button" aria-label="Perbesar kenangan 5">
+          <img src="images/memories/memory-05.webp" alt="Kenangan Tiara 5" loading="lazy" width="576" height="1024">
+          <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
+          <figcaption class="cap"><p>Tawa yang masih terasa</p><span>05</span></figcaption>
+        </figure>
+        <figure class="memory-card reveal" data-full="images/memories/memory-06.webp" data-caption="Momen kecil, rasa besar" tabindex="0" role="button" aria-label="Perbesar kenangan 6">
+          <img src="images/memories/memory-06.webp" alt="Kenangan Tiara 6" loading="lazy" width="1600" height="709">
+          <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
+          <figcaption class="cap"><p>Momen kecil, rasa besar</p><span>06</span></figcaption>
+        </figure>
+        <figure class="memory-card reveal" data-full="images/memories/memory-07.webp" data-caption="Selalu, kamu" tabindex="0" role="button" aria-label="Perbesar kenangan 7">
+          <img src="images/memories/memory-07.webp" alt="Kenangan Tiara 7" loading="lazy" width="1080" height="2408">
+          <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
+          <figcaption class="cap"><p>Selalu, kamu</p><span>07</span></figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- Artwork Section -->
-    <section class="content-section" id="karya">
-      <div class="section-header reveal">
+    <!-- ---------- KARYA ---------- -->
+    <section class="section" id="karya">
+      <div class="section-head center reveal">
         <p class="eyebrow">her little art gallery</p>
-        <h2 class="section-title">Dunia yang Tiara Gambar</h2>
-        <p class="section-desc">Karya-karya kecil yang membuatku percaya bahwa Tiara melihat dunia dengan cara yang berbeda — dan itu indah.</p>
+        <h2>Dunia yang Tiara Gambar</h2>
+        <p>Karya kecil yang membuatku percaya bahwa Tiara melihat dunia dengan cara yang berbeda — dan itu indah.</p>
       </div>
-      <div class="artwork-card reveal">
-        <img src="images/artworks/artwork-01.webp" alt="Karya seni Tiara berjudul Orchid in Bloom" loading="lazy"/>
-        <div class="info">
-          <p class="title">Orchid in Bloom</p>
-          <p class="meta">[tahun] · [media, mis. cat air di kertas]</p>
-          <p class="desc">Tulis cerita di balik karya ini di data/birthday.ts — apa yang menginspirasi Tiara, dan apa yang kamu rasakan saat pertama kali melihatnya.</p>
+      <figure class="art-frame reveal zoom" data-full="images/artworks/artwork-01.webp" data-caption="Karya Tiara" tabindex="0" role="button" aria-label="Perbesar karya">
+        <div class="inner">
+          <img src="images/artworks/artwork-01.webp" alt="Karya seni Tiara" loading="lazy" width="1080" height="1080">
+          <span class="spot" aria-hidden="true"></span>
         </div>
+      </figure>
+      <div class="art-meta reveal" style="--d:.12s">
+        <h3>Karya Tiara</h3>
+        <p class="sub">satu dari banyak hal indah</p>
+        <p>Karya ini kusimpan bukan karena sempurna, tapi karena ada kamu di setiap goresannya.</p>
       </div>
     </section>
 
-    <!-- Letter Section -->
-    <section class="content-section" id="surat">
-      <div class="section-header reveal">
+    <!-- ---------- SURAT ---------- -->
+    <section class="section envelope-section" id="surat">
+      <div class="section-head center reveal">
         <p class="eyebrow">a letter for you</p>
-        <h2 class="section-title">Surat yang Tidak Pernah Selesai Kutulis</h2>
-        <p class="section-desc">Ketuk amplop untuk membukanya</p>
+        <h2>Surat yang Tidak Pernah Selesai Kutulis</h2>
+        <p>Ada surat di dalam amplop ini. Ketuk amplopnya kalau kamu sudah siap membacanya.</p>
       </div>
-      <div class="letter-box reveal" id="letterBox">
-        <p class="greeting">Untuk Tiara,</p>
-        <p>Hari ini aku ingin menulis sesuatu yang berbeda. Bukan sekadar ucapan selamat ulang tahun yang biasa, tapi cerita tentang betapa berartinya kamu bagiku.</p>
-        <p>Setiap hari bersamamu adalah hadiah. Tawa kamu, cara kamu melihat dunia, ketulusan hatimu — semuanya membuat hidup ini terasa lebih ringan dan lebih berwarna.</p>
-        <p>Aku tak sabar ingin melihat apa yang akan dibawa tahun ini untukmu. Tapi satu hal yang pasti: aku akan selalu di sini, menemanimu, mendukungmu, dan mencintaimu dengan sepenuh hati.</p>
-        <div class="poem">
-          <p class="title">Untuk Tiara</p>
-          <p class="line">Di taman ungu tempat bunga mekar</p>
-          <p class="line">Namamu tertulis di setiap kelopak</p>
-          <p class="line">Tiara, cahaya yang tak pernah pudar</p>
-          <p class="line">Selamat ulang tahun, sayangku.</p>
-        </div>
-        <p class="closing">Dengan semua cinta,</p>
-        <p class="signature">Kamu</p>
-      </div>
-    </section>
 
-    <!-- Song Section -->
-    <section class="content-section" id="lagu">
-      <div class="section-header reveal">
-        <p class="eyebrow">our little song</p>
-        <h2 class="section-title">Lagu untuk Pulang</h2>
-        <p class="section-desc">Sebuah lagu kecil yang membuatku selalu mengingatmu. Tekan play, lalu biarkan halaman ini menjadi milik kita berdua.</p>
-      </div>
-      <div class="song-section">
-        <div class="vinyl-wrap">
-          <div class="vinyl" id="vinyl">
-            <div class="cover"><img src="images/tiara/song-cover.webp" alt="Cover lagu" /></div>
-            <div class="grooves"></div>
-            <div class="center"><div class="dot"></div></div>
+      <div class="env-scene">
+        <button class="envelope reveal zoom" id="envelope" type="button" aria-expanded="false" aria-controls="letterShell">
+          <span class="env-layer env-back"></span>
+          <span class="env-paper" aria-hidden="true"></span>
+          <span class="env-layer env-pocket"></span>
+          <span class="env-layer env-flap"></span>
+          <span class="env-seal" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.7-9.3-9A5.3 5.3 0 0 1 12 6.4 5.3 5.3 0 0 1 21.3 12C19.5 16.3 12 21 12 21Z"/></svg>
+          </span>
+          <span class="env-hint">ketuk untuk membuka</span>
+        </button>
+        <span class="env-shadow" aria-hidden="true"></span>
+
+        <div class="letter-shell" id="letterShell" aria-hidden="true">
+          <div class="letter-inner">
+            <article class="letter" aria-label="Surat untuk Tiara">
+              <span class="stamp" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 21s-7.5-4.7-9.3-9A5.3 5.3 0 0 1 12 6.4 5.3 5.3 0 0 1 21.3 12C19.5 16.3 12 21 12 21Z"/></svg>
+              </span>
+              <p class="greeting">Untuk Tiara,</p>
+              <p>Hari ini aku ingin menulis sesuatu yang berbeda. Bukan sekadar ucapan selamat ulang tahun yang biasa, tapi cerita tentang betapa berartinya kamu bagiku.</p>
+              <p>Setiap hari bersamamu adalah hadiah. Tawa kamu, cara kamu melihat dunia, ketulusan hatimu — semuanya membuat hidup ini terasa lebih ringan dan lebih berwarna.</p>
+              <p>Aku tak sabar ingin melihat apa yang akan dibawa tahun ini untukmu. Tapi satu hal yang pasti: aku akan selalu di sini, menemanimu, mendukungmu, dan mencintaimu dengan sepenuh hati.</p>
+              <div class="poem">
+                <p class="t">Untuk Tiara</p>
+                <span>Di taman ungu tempat bunga mekar</span>
+                <span>Namamu tertulis di setiap kelopak</span>
+                <span>Tiara, cahaya yang tak pernah pudar</span>
+                <span>Selamat ulang tahun, sayangku.</span>
+              </div>
+              <p>Kalau nanti kamu lupa seberapa berharga dirimu, buka lagi halaman ini. Aku akan selalu mengingatkannya.</p>
+              <p class="closing">Dengan semua cinta,</p>
+              <p class="sign">Kamu</p>
+              <button class="close-letter" id="closeLetter" type="button">Lipat kembali suratnya</button>
+            </article>
           </div>
         </div>
-        <div class="song-info">
-          <h3>Judul Lagu Kita</h3>
-          <p class="artist">Penyanyi</p>
-          <p class="note">Tulis kenapa lagu ini spesial di sini.</p>
-          <button class="play-btn" id="playBtn" onclick="togglePlay()">
-            <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
-          </button>
-          <audio id="audioPlayer" src="audio/our-song.wav" loop preload="metadata"></audio>
+      </div>
+    </section>
+
+    <!-- ---------- LAGU ---------- -->
+    <section class="section" id="lagu">
+      <div class="section-head center reveal">
+        <p class="eyebrow">our little song</p>
+        <h2>Lagu untuk Pulang</h2>
+        <p>Sebuah lagu kecil yang membuatku selalu mengingatmu. Tekan play, lalu biarkan halaman ini jadi milik kita berdua.</p>
+      </div>
+      <div class="song-wrap">
+        <div class="vinyl-wrap reveal left">
+          <span class="vinyl-ring" id="vinylRing" aria-hidden="true"></span>
+          <div class="vinyl" id="vinyl">
+            <div class="sleeve"><img src="images/tiara/song-cover.webp" alt="Cover lagu" width="512" height="512"></div>
+            <span class="hole" aria-hidden="true"></span>
+          </div>
+          <span class="tonearm" id="tonearm" aria-hidden="true"></span>
+        </div>
+        <div class="song-info reveal right">
+          <h3>Lagu Kita</h3>
+          <p class="artist">untuk Tiara</p>
+          <p class="note">Tulis kenapa lagu ini spesial di sini — ganti teks ini kapan saja.</p>
+          <div class="player">
+            <button class="play-btn" id="playBtn" type="button" aria-label="Putar lagu">
+              <svg class="play-ic" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="pause-ic" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+            </button>
+            <div class="player-main">
+              <input class="seek" id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Posisi lagu">
+              <div class="time"><span id="cur">0:00</span><span id="dur">0:00</span></div>
+            </div>
+            <div class="eq" id="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <audio id="audio" src="audio/our-song.wav" preload="metadata" loop></audio>
         </div>
       </div>
     </section>
 
-    <!-- Finale Section -->
-    <section class="content-section finale" id="penutup">
+    <!-- ---------- PENUTUP ---------- -->
+    <section class="section finale" id="penutup">
+      <span class="halo" aria-hidden="true"></span>
+      <p class="eyebrow" style="justify-content:center">one last thing</p>
       <h2>Tiara, terima kasih telah menemani</h2>
       <p>Kalau semesta mengizinkan aku memilih satu hal untuk kusyukuri seumur hidup, aku akan memilih pertemuan ini.</p>
       <p>Selamat ulang tahun, Tiara. Semoga tahun ini penuh dengan hal-hal yang membuatmu merasa hidup, dicintai, dan bangga menjadi dirimu.</p>
       <p class="signature">With all my love, always.</p>
-      <p style="color:var(--muted);font-size:.8rem;margin-top:10px">— Kamu</p>
-      <div style="margin-top:40px">
-        <button class="celebrate-btn" onclick="fireConfetti()">Rayakan sekali lagi</button>
-        <button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Kembali ke awal</button>
+      <div class="actions">
+        <button class="btn" id="celebrateBtn" type="button">Rayakan sekali lagi
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg>
+        </button>
+        <button class="btn ghost" id="topBtn" type="button">Kembali ke awal</button>
       </div>
-      <div class="footer-text">
-        <p>Dibuat dengan cinta, untuk Tiara. ♡</p>
-        <p style="margin-top:5px">For Tiara, With Love</p>
+      <div class="foot">
+        <p>Dibuat dengan <span class="heart">♡</span> untuk Tiara</p>
+        <p style="margin-top:6px">For Tiara, With Love</p>
       </div>
     </section>
   </main>
 </div>
 
-<!-- Confetti Container -->
-<div id="confettiContainer" style="position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden"></div>
+<!-- ---------- LIGHTBOX ---------- -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Pratinjau gambar">
+  <button class="lb-close" id="lbClose" type="button" aria-label="Tutup">
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <figure>
+    <img id="lbImg" src="" alt="">
+    <figcaption id="lbCap"></figcaption>
+    <span class="counter" id="lbCount"></span>
+  </figure>
+  <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="Sebelumnya">
+    <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="Berikutnya">
+    <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+</div>
 
-<!-- Stars & Petals (generated by JS) -->
+<div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
 <script>
-// Generate stars and petals
-const ambient = document.getElementById('ambient');
-for(let i=0;i<48;i++){
-  const star=document.createElement('span');
-  star.className='star';
-  const r=Math.random();
-  star.style.left=(r*100)+'%';
-  star.style.top=(Math.random()*100)+'%';
-  star.style.width=(1+r*2)+'px';
-  star.style.height=(1+r*2)+'px';
-  star.style.animationDelay=(r*6).toFixed(2)+'s';
-  star.style.animationDuration=(3+r*3).toFixed(2)+'s';
-  ambient.appendChild(star);
-}
-const rand=[.12,.28,.43,.57,.72,.86,.19,.64,.37,.81,.26,.51];
-for(let i=0;i<24;i++){
-  const petal=document.createElement('span');
-  petal.className='petal';
-  const r=rand[i%rand.length];
-  const size=18+r*28;
-  petal.style.left=(r*100).toFixed(2)+'%';
-  petal.style.width=size+'px';
-  petal.style.height=(size*1.6)+'px';
-  petal.style.animationDelay=(r*14).toFixed(2)+'s';
-  petal.style.animationDuration=(16+r*12).toFixed(2)+'s';
-  petal.style.opacity=(.7+r*.3).toFixed(3);
-  ambient.appendChild(petal);
-}
+(function () {
+  "use strict";
+  document.documentElement.classList.add("js");
 
-// Cursor glow
-const glow=document.getElementById('cursorGlow');
-document.addEventListener('mousemove',e=>{
-  glow.style.left=e.clientX+'px';
-  glow.style.top=e.clientY+'px';
-  glow.style.opacity='1';
-});
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-// Scroll progress
-const progress=document.getElementById('scrollProgress');
-window.addEventListener('scroll',()=>{
-  const h=document.documentElement.scrollHeight-window.innerHeight;
-  const pct=h>0?(window.scrollY/h)*100:0;
-  progress.style.width=pct+'%';
-});
+  /* ---------- ambient: stars + petals ---------- */
+  (function ambient() {
+    var host = $("#ambient");
+    var i, el, r;
+    for (i = 0; i < 52; i++) {
+      r = Math.random();
+      el = document.createElement("span");
+      el.className = "star";
+      el.style.left = (r * 100).toFixed(2) + "%";
+      el.style.top = (Math.random() * 100).toFixed(2) + "%";
+      el.style.width = el.style.height = (1 + r * 2.2).toFixed(2) + "px";
+      el.style.animationDelay = (r * 7).toFixed(2) + "s";
+      el.style.animationDuration = (3 + r * 4).toFixed(2) + "s";
+      host.appendChild(el);
+    }
+    for (i = 0; i < 26; i++) {
+      r = Math.random();
+      el = document.createElement("span");
+      el.className = "petal";
+      var size = 14 + r * 26;
+      el.style.left = (Math.random() * 100).toFixed(2) + "%";
+      el.style.width = size.toFixed(0) + "px";
+      el.style.height = (size * 1.55).toFixed(0) + "px";
+      el.style.animationDelay = (-r * 22).toFixed(2) + "s";
+      el.style.animationDuration = (17 + r * 16).toFixed(2) + "s";
+      el.style.opacity = (0.55 + r * 0.45).toFixed(2);
+      host.appendChild(el);
+    }
+  })();
 
-// Reveal on scroll
-const observer=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-},{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  /* ---------- cursor glow ---------- */
+  (function cursor() {
+    var glow = $("#cursorGlow");
+    if (reduceMotion || window.matchMedia("(pointer: coarse)").matches) return;
+    var x = 0, y = 0, cx = 0, cy = 0, raf;
+    document.addEventListener("mousemove", function (e) {
+      x = e.clientX; y = e.clientY;
+      glow.style.opacity = "1";
+      if (!raf) raf = requestAnimationFrame(loop);
+    }, { passive: true });
+    document.addEventListener("mouseleave", function () { glow.style.opacity = "0"; });
+    function loop() {
+      cx += (x - cx) * 0.14;
+      cy += (y - cy) * 0.14;
+      glow.style.transform = "translate(" + cx + "px," + cy + "px) translate(-50%,-50%)";
+      raf = Math.abs(x - cx) > 0.4 || Math.abs(y - cy) > 0.4 ? requestAnimationFrame(loop) : 0;
+    }
+  })();
 
-// Open site
-function openSite(){
-  const opening=document.getElementById('opening');
-  opening.classList.add('hidden');
-  document.body.style.overflow='';
-  setTimeout(()=>{ opening.style.display='none'; },800);
-  document.getElementById('mainSite').style.display='block';
-  window.scrollTo(0,0);
-}
-document.body.style.overflow='hidden';
-
-// Cake candles
-let blown=0;
-function blowCandle(i){
-  const c=document.getElementById('candle'+i);
-  if(c.classList.contains('extinguished')) return;
-  c.classList.add('extinguished');
-  blown++;
-  if(blown>=3){
-    document.getElementById('cakeMessage').textContent='Tiara, kamu sudah sempurna!';
-    document.getElementById('continueBtn').style.display='inline-block';
+  /* ---------- scroll progress ---------- */
+  var progress = $("#progress");
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + "%";
   }
-}
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 
-// Play/pause music
-const audio=document.getElementById('audioPlayer');
-const vinyl=document.getElementById('vinyl');
-const playIcon=document.getElementById('playIcon');
-const pauseIcon=document.getElementById('pauseIcon');
-function togglePlay(){
-  if(audio.paused){
-    audio.play().catch(()=>{});
-    vinyl.classList.add('spinning');
-    playIcon.style.display='none';
-    pauseIcon.style.display='block';
+  /* ---------- reveal ---------- */
+  var revealEls = $$(".reveal");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    revealEls.forEach(function (el) { io.observe(el); });
   } else {
-    audio.pause();
-    vinyl.classList.remove('spinning');
-    playIcon.style.display='block';
-    pauseIcon.style.display='none';
+    revealEls.forEach(function (el) { el.classList.add("in"); });
   }
-}
-audio.addEventListener('play',()=>{ vinyl.classList.add('spinning'); playIcon.style.display='none'; pauseIcon.style.display='block'; });
-audio.addEventListener('pause',()=>{ vinyl.classList.remove('spinning'); playIcon.style.display='block'; pauseIcon.style.display='none'; });
 
-// Confetti
-function fireConfetti(){
-  const container=document.getElementById('confettiContainer');
-  const colors=['#d8b4fe','#f5c9e8','#c4b5fd','#ffffff','#a78bfa','#f0abfc'];
-  for(let i=0;i<80;i++){
-    const piece=document.createElement('div');
-    piece.className='confetti-piece';
-    piece.style.left=Math.random()*100+'%';
-    piece.style.width=(8+Math.random()*10)+'px';
-    piece.style.height=(12+Math.random()*14)+'px';
-    piece.style.borderRadius=Math.random()>.45?'999px':'2px';
-    piece.style.background=colors[i%colors.length];
-    piece.style.animationDelay=Math.random()*.8+'s';
-    piece.style.animationDuration=(3.2+Math.random()*2.2)+'s';
-    piece.style.setProperty('--drift',(Math.random()-.5)*260+'px');
-    container.appendChild(piece);
+  /* ---------- nav active ---------- */
+  (function navActive() {
+    var links = $$(".nav a");
+    var map = {};
+    links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+    var sections = $$("main section[id]");
+    if (!("IntersectionObserver" in window)) return;
+    var io2 = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        links.forEach(function (a) { a.classList.remove("active"); });
+        var a = map[e.target.id];
+        if (a) a.classList.add("active");
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    sections.forEach(function (s) { io2.observe(s); });
+  })();
+
+  /* ---------- tilt + spotlight ---------- */
+  function bindTilt(el, max) {
+    if (reduceMotion || window.matchMedia("(pointer: coarse)").matches) return;
+    el.addEventListener("mousemove", function (e) {
+      var r = el.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width;
+      var py = (e.clientY - r.top) / r.height;
+      el.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+      el.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+      if (max) el.style.transform = "perspective(900px) rotateY(" + ((px - 0.5) * max).toFixed(2) + "deg) rotateX(" + ((0.5 - py) * max).toFixed(2) + "deg)";
+    });
+    el.addEventListener("mouseleave", function () { if (max) el.style.transform = ""; });
   }
-  setTimeout(()=>{ container.innerHTML=''; },7000);
-}
+  $$(".quote-card, .wish-card, .art-frame").forEach(function (el) { bindTilt(el, el.classList.contains("art-frame") ? 4 : 0); });
+  var portrait = $(".gate-portrait");
+  if (portrait) {
+    document.addEventListener("mousemove", function (e) {
+      if (reduceMotion) return;
+      var cx = (e.clientX / window.innerWidth - 0.5);
+      var cy = (e.clientY / window.innerHeight - 0.5);
+      portrait.style.transform = "translate3d(" + (cx * 14).toFixed(1) + "px," + (cy * 10).toFixed(1) + "px,0)";
+    }, { passive: true });
+  }
 
-// Auto-confetti when finale enters view
-const finaleObserver=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      fireConfetti();
-      finaleObserver.disconnect();
+  /* ---------- magnetic buttons ---------- */
+  if (!reduceMotion && !window.matchMedia("(pointer: coarse)").matches) {
+    $$(".btn").forEach(function (b) {
+      b.addEventListener("mousemove", function (e) {
+        var r = b.getBoundingClientRect();
+        var mx = (e.clientX - r.left) / r.width;
+        var my = (e.clientY - r.top) / r.height;
+        b.style.setProperty("--mx", (mx * 100).toFixed(0) + "%");
+        b.style.setProperty("--my", (my * 100).toFixed(0) + "%");
+        b.style.transform = "translate(" + ((mx - 0.5) * 8).toFixed(1) + "px," + ((my - 0.5) * 6 - 2).toFixed(1) + "px)";
+      });
+      b.addEventListener("mouseleave", function () { b.style.transform = ""; });
+    });
+  }
+
+  /* ---------- open the gate ---------- */
+  var gate = $("#gate"), site = $("#site"), enterBtn = $("#enterBtn");
+  function openGate() {
+    gate.classList.add("hidden");
+    document.body.classList.remove("locked");
+    site.removeAttribute("inert");
+    site.setAttribute("aria-hidden", "false");
+    setTimeout(function () { gate.style.display = "none"; }, 950);
+    window.scrollTo({ top: 0, behavior: "auto" });
+    burst($("#confettiLayer"), 26, true);
+  }
+  enterBtn.addEventListener("click", openGate);
+
+  /* ---------- cake ---------- */
+  var candles = $$(".candle");
+  var blown = 0;
+  var stage = $("#cakeStage");
+  var wishes = $("#wishes");
+  var continueWrap = $("#continueWrap");
+  var cakeText = $("#cakeText");
+  var cakeNote = $("#cakeNote");
+  var dots = $$(".cake-status .dot");
+
+  candles.forEach(function (c) {
+    c.addEventListener("click", function () {
+      if (c.classList.contains("out")) return;
+      c.classList.add("out");
+      var r = c.getBoundingClientRect();
+      sparkle(r.left + r.width / 2, r.top, 12);
+      blown++;
+      dots[blown - 1].classList.add("on");
+      cakeText.textContent = blown + " dari 3 lilin padam";
+      if (blown < 3) {
+        cakeNote.textContent = blown === 1 ? "Satu lagi. Pelan-pelan saja." : "Satu lilin terakhir.";
+        return;
+      }
+      cakeNote.textContent = "Semua lilin padam. Doamu terkabul ♡";
+      stage.classList.add("done");
+      wishes.classList.add("show");
+      continueWrap.classList.add("show");
+      var b = stage.getBoundingClientRect();
+      sparkle(b.left + b.width / 2, b.top + b.height * 0.3, 34);
+      burst($("#confettiLayer"), 60, true);
+      wishes.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+    });
+  });
+
+  function sparkle(x, y, n) {
+    if (reduceMotion) return;
+    var layer = $("#confettiLayer");
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.className = "spark";
+      var a = Math.random() * Math.PI * 2;
+      var d = 26 + Math.random() * 90;
+      s.style.left = x + "px";
+      s.style.top = y + "px";
+      s.style.setProperty("--dx", (Math.cos(a) * d).toFixed(0) + "px");
+      s.style.setProperty("--dy", (Math.sin(a) * d - 30).toFixed(0) + "px");
+      s.style.animationDelay = (Math.random() * 0.1).toFixed(2) + "s";
+      s.style.animationDuration = (0.5 + Math.random() * 0.6).toFixed(2) + "s";
+      layer.appendChild(s);
+      (function (node) { setTimeout(function () { node.remove(); }, 1400); })(s);
+    }
+  }
+
+  /* ---------- envelope ---------- */
+  var envelope = $("#envelope");
+  var letterShell = $("#letterShell");
+  var closeLetter = $("#closeLetter");
+  function openLetter() {
+    envelope.classList.add("open");
+    envelope.setAttribute("aria-expanded", "true");
+    letterShell.classList.add("open");
+    letterShell.setAttribute("aria-hidden", "false");
+    setTimeout(function () {
+      letterShell.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    }, 320);
+  }
+  function closeLetterFn() {
+    envelope.classList.remove("open");
+    envelope.setAttribute("aria-expanded", "false");
+    letterShell.classList.remove("open");
+    letterShell.setAttribute("aria-hidden", "true");
+    envelope.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  }
+  envelope.addEventListener("click", function () {
+    if (!envelope.classList.contains("open")) openLetter();
+  });
+  closeLetter.addEventListener("click", closeLetterFn);
+
+  /* ---------- lightbox ---------- */
+  var items = $$(".memory-card, .art-frame").map(function (el) {
+    return { el: el, src: el.getAttribute("data-full"), cap: el.getAttribute("data-caption") || "" };
+  });
+  var lb = $("#lightbox"), lbImg = $("#lbImg"), lbCap = $("#lbCap"), lbCount = $("#lbCount");
+  var current = -1;
+
+  function showItem(i) {
+    current = (i + items.length) % items.length;
+    var it = items[current];
+    lbImg.src = it.src;
+    lbImg.alt = it.cap;
+    lbCap.textContent = it.cap;
+    lbCount.textContent = (current + 1) + " / " + items.length;
+  }
+  function openLb(i) {
+    showItem(i);
+    lb.classList.add("open");
+    document.body.classList.add("locked");
+    $("#lbClose").focus();
+  }
+  function closeLb() {
+    lb.classList.remove("open");
+    if (!gate || gate.classList.contains("hidden")) document.body.classList.remove("locked");
+  }
+  items.forEach(function (it, i) {
+    it.el.addEventListener("click", function () { openLb(i); });
+    it.el.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLb(i); }
+    });
+  });
+  $("#lbClose").addEventListener("click", closeLb);
+  $("#lbPrev").addEventListener("click", function () { showItem(current - 1); });
+  $("#lbNext").addEventListener("click", function () { showItem(current + 1); });
+  lb.addEventListener("click", function (e) { if (e.target === lb) closeLb(); });
+  document.addEventListener("keydown", function (e) {
+    if (!lb.classList.contains("open")) return;
+    if (e.key === "Escape") closeLb();
+    if (e.key === "ArrowLeft") showItem(current - 1);
+    if (e.key === "ArrowRight") showItem(current + 1);
+  });
+
+  /* ---------- audio ---------- */
+  var audio = $("#audio"), playBtn = $("#playBtn"), seek = $("#seek");
+  var vinyl = $("#vinyl"), tonearm = $("#tonearm"), ring = $("#vinylRing"), eq = $("#eq");
+  var cur = $("#cur"), dur = $("#dur");
+
+  function fmt(t) {
+    if (!isFinite(t) || t < 0) t = 0;
+    var m = Math.floor(t / 60), s = Math.floor(t % 60);
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+  function setPlaying(on) {
+    playBtn.classList.toggle("playing", on);
+    playBtn.setAttribute("aria-label", on ? "Jeda lagu" : "Putar lagu");
+    vinyl.classList.toggle("spinning", on && !reduceMotion);
+    tonearm.classList.toggle("on", on);
+    eq.classList.toggle("playing", on && !reduceMotion);
+  }
+  playBtn.addEventListener("click", function () {
+    if (audio.paused) {
+      var p = audio.play();
+      setPlaying(true);
+      if (p && p.catch) p.catch(function () { setPlaying(false); });
+    } else {
+      audio.pause();
+      setPlaying(false);
     }
   });
-},{threshold:.35});
-const finale=document.getElementById('penutup');
-if(finale) finaleObserver.observe(finale);
+  audio.addEventListener("play", function () { setPlaying(true); });
+  audio.addEventListener("pause", function () { setPlaying(false); });
+  audio.addEventListener("loadedmetadata", function () { dur.textContent = fmt(audio.duration); });
+  audio.addEventListener("timeupdate", function () {
+    var p = audio.duration ? audio.currentTime / audio.duration : 0;
+    seek.value = Math.round(p * 1000);
+    ring.style.setProperty("--p", (p * 100).toFixed(1) + "%");
+    cur.textContent = fmt(audio.currentTime);
+    if (!dur.textContent || dur.textContent === "0:00") dur.textContent = fmt(audio.duration);
+  });
+  seek.addEventListener("input", function () {
+    if (audio.duration) audio.currentTime = (seek.value / 1000) * audio.duration;
+  });
+
+  /* ---------- confetti / hearts ---------- */
+  function burst(layer, count, hearts) {
+    if (reduceMotion) return;
+    var colors = ["#d8b4fe", "#f5c9e8", "#c4b5fd", "#ffffff", "#a78bfa", "#f0abfc", "#fde68a"];
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement("span");
+      p.className = "confetti-piece";
+      p.style.left = (Math.random() * 100).toFixed(2) + "%";
+      p.style.width = (7 + Math.random() * 9).toFixed(0) + "px";
+      p.style.height = (11 + Math.random() * 15).toFixed(0) + "px";
+      p.style.background = colors[i % colors.length];
+      p.style.borderRadius = Math.random() > 0.5 ? "99px" : "2px";
+      p.style.setProperty("--dx", ((Math.random() - 0.5) * 300).toFixed(0) + "px");
+      p.style.animationDelay = (Math.random() * 0.9).toFixed(2) + "s";
+      p.style.animationDuration = (3.4 + Math.random() * 2.6).toFixed(2) + "s";
+      layer.appendChild(p);
+    }
+    if (hearts) {
+      for (var j = 0; j < Math.round(count / 3); j++) {
+        var h = document.createElement("span");
+        h.className = "heart";
+        h.textContent = "♡";
+        h.style.left = (Math.random() * 100).toFixed(2) + "%";
+        h.style.fontSize = (14 + Math.random() * 18).toFixed(0) + "px";
+        h.style.setProperty("--dx", ((Math.random() - 0.5) * 160).toFixed(0) + "px");
+        h.style.animationDelay = (Math.random() * 1.4).toFixed(2) + "s";
+        h.style.animationDuration = (4 + Math.random() * 3).toFixed(2) + "s";
+        layer.appendChild(h);
+      }
+    }
+    setTimeout(function () { layer.innerHTML = ""; }, 9000);
+  }
+  $("#celebrateBtn").addEventListener("click", function () { burst($("#confettiLayer"), 110, true); });
+  $("#topBtn").addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }); });
+
+  /* confetti when the finale is reached */
+  (function finaleWatch() {
+    var finale = $("#penutup");
+    if (!("IntersectionObserver" in window)) return;
+    var seen = false;
+    var o = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && !seen) { seen = true; burst($("#confettiLayer"), 70, true); o.disconnect(); }
+      });
+    }, { threshold: 0.35 });
+    o.observe(finale);
+  })();
+
+})();
 </script>
 </body>
 </html>

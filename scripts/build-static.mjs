@@ -8,19 +8,11 @@ import sharp from "sharp";
 
 const ROOT = path.resolve(".");
 const OUT = path.join(ROOT, "docs");
-const UPLOADED_MEMORY =
-  "uploads/memories/1794192184880-whatsapp_image_2026-11-04_at_12.18.49.jpeg";
 
 let html = await fs.readFile(path.join(ROOT, "public/index.html"), "utf8");
 
-// The first memory slot uses the photo uploaded through the admin dashboard.
-html = html.replace(
-  /src="images\/memories\/memory-01\.png"/g,
-  `src="${UPLOADED_MEMORY}"`,
-);
-
 const refs = new Set();
-for (const m of html.matchAll(/(?:src|href)="((?:images|uploads|audio)\/[^"]+)"/g)) {
+for (const m of html.matchAll(/(?:src|href|data-full)="((?:images|uploads|audio)\/[^"]+)"/g)) {
   refs.add(m[1]);
 }
 
