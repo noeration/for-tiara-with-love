@@ -51,6 +51,16 @@ for (const ref of refs) {
   console.log(`${ref} -> ${outRel} (${(data.length / 1024).toFixed(0)} KB)`);
 }
 
+// Compatibility copies so HTML cached by GitHub Pages' CDN from the previous
+// deploy never requests a missing file while the new HTML propagates.
+for (const [from, to] of [
+  ["images/tiara/opening.webp", "images/tiara/prabowo.webp"],
+  ["images/memories/memory-01.webp", "uploads/memories/1794192184880-whatsapp_image_2026-11-04_at_12.18.49.webp"],
+]) {
+  await fs.mkdir(path.dirname(path.join(OUT, to)), { recursive: true });
+  await fs.copyFile(path.join(OUT, from), path.join(OUT, to));
+}
+
 // Google Fonts are the only external dependency; keep them, they are fast.
 await fs.writeFile(path.join(OUT, "index.html"), html, "utf8");
 await fs.writeFile(path.join(OUT, ".nojekyll"), "");
