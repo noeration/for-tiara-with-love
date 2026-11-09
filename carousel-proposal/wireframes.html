@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>OH-VERTHINKING — Carousel Wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F5FA;
+    --paper2:#ECEEFB;
+    --ink:#14151B;
+    --cobalt:#2B3BEE;
+    --peri:#AEB7F2;
+    --mist:#E2E5FA;
+    --bone:#F1EDE4;
+    --white:#FFFFFF;
+    --serif:"DM Serif Display", Georgia, "Times New Roman", serif;
+    --sans:"Plus Jakarta Sans", "Segoe UI", Arial, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#DADCE8;font-family:var(--sans);color:var(--ink)}
+  body{padding:0}
+  .board{width:1560px;margin:0 auto;padding:64px 60px 72px;background:#DADCE8}
+  .board-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #14151B;padding-bottom:28px;margin-bottom:40px}
+  .kicker{font-size:15px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#2B3BEE}
+  .board-title{font-family:var(--serif);font-size:96px;line-height:.9;letter-spacing:-.02em;margin-top:8px}
+  .board-title i{color:var(--cobalt)}
+  .board-sub{font-size:19px;line-height:1.5;max-width:460px;text-align:right;color:#3A3B45}
+  .board-sub b{color:#14151B}
+  .system{display:flex;gap:34px;align-items:center;margin:0 0 44px;flex-wrap:wrap}
+  .swatches{display:flex;gap:0;border:1px solid rgba(20,21,27,.25)}
+  .sw{width:88px;height:54px;display:flex;align-items:flex-end;justify-content:center;font-size:10px;letter-spacing:.06em;padding-bottom:6px;font-weight:700}
+  .type-note{font-size:14px;line-height:1.65;color:#33343D}
+  .type-note b{display:block;font-size:15px;color:#14151B}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:52px 48px}
+  .card{min-width:0}
+  .card-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+  .card-no{font-size:14px;letter-spacing:.18em;font-weight:800;color:var(--cobalt)}
+  .card-name{font-family:var(--serif);font-size:28px;line-height:1}
+  .card-use{font-size:13px;line-height:1.5;color:#44454F;margin-top:12px;min-height:40px}
+  .frame{width:690px;height:862.5px;overflow:hidden;background:#fff;box-shadow:0 16px 34px rgba(20,21,27,.16);position:relative}
+  .slide{width:1080px;height:1350px;position:relative;overflow:hidden;transform-origin:top left;transform:scale(.6388889);background:var(--paper)}
+  .slide::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.045;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
+  .abs{position:absolute}
+  .meta{font-size:17px;letter-spacing:.19em;text-transform:uppercase;font-weight:700;color:var(--ink);opacity:.72}
+  .meta-r{text-align:right}
+  .rule{height:1px;background:var(--ink);opacity:.22}
+  .serif{font-family:var(--serif);font-weight:400}
+  .body{font-family:var(--sans);font-weight:500;line-height:1.5}
+  .footer{position:absolute;left:80px;right:80px;bottom:58px;display:flex;justify-content:space-between;align-items:center;font-size:15px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;opacity:.65}
+  .bubble{position:absolute;border-radius:34px;padding:26px 32px;font-weight:600;line-height:1.28}
+  .tail-l::after,.tail-r::after{content:"";position:absolute;bottom:-14px;width:30px;height:30px;background:inherit;border-radius:4px;transform:rotate(45deg)}
+  .tail-l::after{left:46px}
+  .tail-r::after{right:46px}
+
+  /* ---------- 01 HOOK ---------- */
+  .s1{background:var(--paper)}
+  .s1 .head{margin:0;font-family:var(--serif);font-size:78px;line-height:1.02;letter-spacing:-.015em;color:var(--ink)}
+  .s1 .oh{font-size:306px;line-height:.72;color:var(--cobalt);font-style:italic;letter-spacing:-.045em;display:block;margin:30px 0 36px -8px}
+  .s1 .quote{position:absolute;left:0;top:0;font-size:78px;line-height:1.04}
+  .s1 .floater{position:absolute;border-radius:50%;border:2px solid var(--peri);display:flex;align-items:center;justify-content:center;color:var(--cobalt);font-family:var(--serif);font-style:italic;background:rgba(255,255,255,.4)}
+  .s1 .support{font-size:33px;line-height:1.42;font-weight:500;color:#2A2B35;width:620px}
+  .s1 .photo-note{position:absolute;border:1px dashed rgba(43,59,238,.55);color:var(--cobalt);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:8px 10px;background:rgba(245,245,250,.7)}
+  .notif{position:absolute;filter:drop-shadow(0 14px 20px rgba(20,21,27,.28))}
+
+  /* ---------- 02 PROBLEM ---------- */
+  .s2{background:var(--paper2)}
+  .s2 .ghost{position:absolute;font-family:var(--serif);font-style:italic;font-size:820px;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(43,59,238,.10);right:-190px;top:300px;transform:rotate(-8deg)}
+  .s2 .headline{font-family:var(--serif);font-size:66px;line-height:1.05;letter-spacing:-.015em;width:850px}
+  .s2 .q1{left:80px;top:392px;width:560px;background:var(--cobalt);color:var(--white);font-size:39px;transform:rotate(-2deg);box-shadow:0 14px 28px rgba(43,59,238,.18)}
+  .s2 .q2{right:80px;top:585px;width:520px;background:var(--white);border:2px solid var(--cobalt);color:var(--ink);font-size:37px;transform:rotate(2.2deg)}
+  .s2 .q3{left:112px;top:790px;width:665px;background:var(--peri);color:var(--ink);font-size:37px;transform:rotate(-1.2deg)}
+  .s2 .typing{position:absolute;right:118px;top:1000px;background:var(--white);border-radius:40px;padding:24px 30px;display:flex;gap:11px;transform:rotate(-2deg);box-shadow:0 10px 24px rgba(20,21,27,.08)}
+  .s2 .typing i{width:13px;height:13px;border-radius:50%;background:var(--cobalt);display:block;opacity:.6}
+  .s2 .closing{position:absolute;left:80px;right:80px;top:1096px;background:var(--ink);color:var(--bone);padding:34px 40px;font-size:31px;line-height:1.35;font-weight:500}
+  .s2 .closing b{color:#C9CFFF;font-weight:700}
+  .s2 .stamp{position:absolute;right:100px;top:332px;border:1px solid rgba(20,21,27,.35);padding:8px 14px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;transform:rotate(3deg);opacity:.65}
+
+  /* ---------- 03 TERM ---------- */
+  .s3{background:var(--paper)}
+  .s3 .mind{font-family:var(--serif);font-size:196px;line-height:.8;letter-spacing:-.03em;color:var(--ink)}
+  .s3 .reading{font-family:var(--serif);font-style:italic;font-size:196px;line-height:.8;letter-spacing:-.03em;color:var(--cobalt);margin-left:4px}
+  .s3 .pill{display:inline-block;border:1.5px solid var(--cobalt);color:var(--cobalt);padding:8px 18px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-top:26px}
+  .s3 .lede{font-size:32px;line-height:1.36;font-weight:700;width:500px}
+  .s3 .term{font-family:var(--serif);font-style:italic;color:var(--cobalt);font-size:52px;line-height:1;margin:8px 0 22px;letter-spacing:-.01em}
+  .s3 .copy{font-size:27px;line-height:1.5;width:500px;color:#2E2F39;margin-top:18px}
+  .s3 .copy em{font-family:var(--serif);font-style:italic;font-size:1.12em;color:var(--cobalt)}
+  .s3 .headwrap{position:absolute;right:-6px;top:548px;width:500px;height:620px;opacity:.55}
+  .s3 .assumption{position:absolute;left:654px;top:770px;width:348px;height:354px;border:2px dashed var(--cobalt);border-radius:14px;background:rgba(255,255,255,.78);transform:rotate(3deg);padding:26px;z-index:2}
+  .s3 .assumption .lbl{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--cobalt)}
+  .s3 .mini{margin-top:14px;background:var(--mist);border-radius:16px;padding:12px 16px;font-size:20px;line-height:1.3;font-weight:600;color:#2A2B38}
+  .s3 .fact{position:absolute;left:646px;top:590px;width:336px;background:var(--cobalt);color:var(--white);padding:24px 26px;transform:rotate(-3deg);box-shadow:0 16px 30px rgba(43,59,238,.22);z-index:3}
+  .s3 .fact .lbl{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#DCE0FF}
+  .s3 .fact .txt{font-family:var(--serif);font-size:42px;line-height:1.05;margin-top:10px}
+  .s3 .legend{position:absolute;left:80px;bottom:148px;display:flex;gap:34px;align-items:center;font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  .s3 .key{display:flex;align-items:center;gap:12px}
+  .s3 .box{width:18px;height:18px;background:var(--cobalt);display:inline-block}
+  .s3 .box.dash{background:transparent;border:2px dashed var(--cobalt)}
+
+  /* ---------- 04 SOLUTION ---------- */
+  .s4{background:linear-gradient(180deg,#F7F7FB 0%,#EFF1FB 100%)}
+  .s4 .headline{font-family:var(--serif);font-size:57px;line-height:1.1;letter-spacing:-.01em;width:880px}
+  .s4 .path{position:absolute;left:80px;top:340px;width:920px;height:720px;opacity:.5}
+  .s4 .step{position:absolute;left:80px;width:920px;padding-top:38px;border-top:1px solid rgba(20,21,27,.22);display:flex;align-items:flex-start;gap:34px}
+  .s4 .n{font-family:var(--serif);font-size:88px;line-height:.85;color:transparent;-webkit-text-stroke:2px var(--cobalt);width:112px;flex:0 0 112px}
+  .s4 .txt{font-size:32px;line-height:1.34;font-weight:600;width:560px}
+  .s4 .txt small{display:block;font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--cobalt);margin-bottom:8px}
+  .s4 .icon{width:88px;height:88px;flex:0 0 88px;margin-left:auto;opacity:.95}
+  .s4 .s-a{top:376px;margin-left:0}
+  .s4 .s-b{top:620px;margin-left:60px;width:860px}
+  .s4 .s-c{top:884px;margin-left:120px;width:800px}
+  .s4 .s-c .txt{width:520px}
+  .s4 .note{position:absolute;left:86px;bottom:124px;font-size:18px;letter-spacing:.02em;color:var(--cobalt);font-weight:600;transform:rotate(-2deg)}
+
+  /* ---------- 05 RESULT ---------- */
+  .s5{background:var(--cobalt);color:var(--bone)}
+  .s5 .meta{color:var(--bone);opacity:.75}
+  .s5 .rule{background:var(--bone);opacity:.35}
+  .s5 .headline{font-size:38px;line-height:1.36;font-weight:600;width:760px;color:#F7F3EA}
+  .s5 .bubble-oh{position:absolute;left:86px;top:438px;width:198px;height:128px;background:var(--bone);color:var(--ink);border-radius:34px 34px 34px 8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:74px;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+  .s5 .ripple{position:absolute;border:1px solid rgba(241,237,228,.20);border-radius:50%;left:185px;top:502px;transform:translate(-50%,-50%)}
+  .s5 .quote{font-family:var(--serif);font-size:122px;line-height:.98;letter-spacing:-.025em;width:900px}
+  .s5 .quote em{font-style:italic}
+  .s5 .quote .big{font-size:196px;line-height:.82;display:block;margin-top:16px}
+  .s5 .support{font-size:30px;line-height:1.45;font-weight:500;color:#D9DDFF;width:600px}
+  .s5 .footer{color:var(--bone);opacity:.7}
+
+  /* ---------- 06 CTA ---------- */
+  .s6{background:var(--paper)}
+  .s6 .headline{font-family:var(--serif);font-size:79px;line-height:1.02;letter-spacing:-.015em;width:850px}
+  .s6 .headline em{font-style:italic;color:var(--cobalt)}
+  .s6 .support{font-size:33px;line-height:1.45;font-weight:500;width:660px;color:#2B2C36}
+  .s6 .composer{position:absolute;left:80px;top:760px;width:920px;height:244px;background:var(--white);border:2px solid var(--ink);border-radius:20px;padding:30px 32px;box-shadow:14px 14px 0 var(--peri)}
+  .s6 .composer .row{display:flex;align-items:center;gap:18px}
+  .s6 .avatar{width:58px;height:58px;border-radius:50%;background:var(--mist);border:1.5px solid var(--cobalt);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;color:var(--cobalt);font-size:27px;flex:0 0 58px}
+  .s6 .placeholder{font-size:28px;color:#7A7C8D;font-weight:500}
+  .s6 .cursor{width:2px;height:34px;background:var(--cobalt);display:inline-block;vertical-align:-6px;margin-left:2px}
+  .s6 .send{position:absolute;right:28px;bottom:28px;width:82px;height:82px;border-radius:50%;background:var(--cobalt);display:flex;align-items:center;justify-content:center}
+  .s6 .cta{position:absolute;left:80px;top:1080px;background:var(--cobalt);color:var(--white);padding:24px 34px;font-size:26px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;border-radius:999px;box-shadow:0 14px 26px rgba(43,59,238,.28)}
+  .s6 .cta span{font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0;font-size:30px;margin-left:12px}
+  .s6 .mini-c{position:absolute;right:88px;top:1018px;background:var(--mist);border-radius:24px;padding:16px 22px;font-size:21px;font-weight:600;transform:rotate(3deg)}
+  .s6 .heart{position:absolute;right:132px;top:700px;width:74px;height:74px;border-radius:50%;background:var(--peri);display:flex;align-items:center;justify-content:center;transform:rotate(-8deg);font-family:var(--serif);font-size:32px;color:var(--cobalt)}
+  .s6 .notif2{position:absolute;right:24px;top:512px;width:300px;transform:rotate(7deg);opacity:.94;filter:drop-shadow(0 12px 18px rgba(20,21,27,.22))}
+  .s6 .arrow{position:absolute;left:520px;top:1016px;width:120px;height:90px;transform:rotate(8deg)}
+
+  /* ---------- slides-only view ---------- */
+  body.slides-view{background:#C9CBD8;padding:48px}
+  body.slides-view .board{width:1080px;padding:0;background:transparent}
+  body.slides-view .board-head,body.slides-view .system,body.slides-view .card-top,body.slides-view .card-use,body.slides-view .grid{display:none}
+  body.slides-view .slide{transform:none;margin:0 0 40px;box-shadow:0 18px 40px rgba(20,21,27,.25)}
+  body.slides-view .card{display:block}
+  body.slides-view .frame{width:1080px;height:1350px;overflow:visible;box-shadow:none;background:none}
+</style>
+</head>
+<body>
+<div class="board" id="board"></div>
+<script>
+const asset = "file:///C:/Users/Vina/Downloads/project%20carousel/asset/notification%20pop%20out.png";
+
+const headIcon = (id) => `<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="c${id}"><rect width="120" height="120"/></clipPath></defs><g clip-path="url(#c${id})"><path d="M60 14C92 14 110 38 110 66C110 94 89 110 62 110C49 110 41 105 34 99L12 106L19 83C15 76 12 71 12 64C12 36 31 14 60 14Z" stroke="#2B3BEE" stroke-width="2.5" fill="#E2E5FA"/><path d="M40 62C40 62 50 52 60 52C70 52 80 62 80 62" stroke="#14151B" stroke-width="3" stroke-linecap="round"/></g></svg>`;
+
+const slides = [
+{
+ no:"01", name:"Hook", use:"Recognition. One word, one giant thought spiral. Stop the scroll.",
+ html:`
+ <div class="slide s1">
+   <div class="abs" style="left:80px;top:62px"><div class="meta">Catatan Pikiran / 01</div></div>
+   <div class="abs" style="right:80px;top:62px"><div class="meta meta-r">Swipe →</div></div>
+   <div class="abs" style="left:80px;right:80px;top:104px" class="rule"><div class="rule"></div></div>
+
+   <div class="abs" style="left:80px;top:196px;width:920px">
+     <div class="head">Cuma dibalas</div>
+     <span class="oh">‘oh’</span>
+     <div class="head">tapi dipikirin<br>sampai mau tidur.</div>
+   </div>
+
+   <div class="floater" style="left:772px;top:356px;width:92px;height:92px;font-size:46px;transform:rotate(8deg)">?</div>
+   <div class="floater" style="left:842px;top:486px;width:70px;height:70px;font-size:22px;transform:rotate(-6deg);letter-spacing:.08em">...</div>
+   <div class="floater" style="left:690px;top:590px;width:52px;height:52px;font-size:26px;transform:rotate(12deg)">?</div>
+
+   <div class="abs support" style="left:80px;top:900px">
+     Pernah nggak? Padahal cuma satu kata, tapi pikiranmu sudah ke mana-mana.
+   </div>
+
+   <div class="abs" style="left:520px;top:1020px;width:560px;height:190px;overflow:hidden">
+     <img class="notif" src="${asset}" style="width:560px;left:0;top:0;position:absolute">
+   </div>
+
+   <div class="footer"><span>Overthinking &amp; Mind Reading</span><span>01 / 06</span></div>
+ </div>`
+},
+{
+ no:"02", name:"Problem", use:"Overthinking. Questions multiply, overlap, refuse to settle.",
+ html:`
+ <div class="slide s2">
+   <div class="abs" style="left:80px;top:62px"><div class="meta">Catatan Pikiran / 02</div></div>
+   <div class="abs" style="right:80px;top:62px"><div class="meta meta-r">Swipe</div></div>
+   <div class="abs" style="left:80px;right:80px;top:104px"><div class="rule"></div></div>
+   <div class="ghost">oh</div>
+
+   <div class="abs headline" style="left:80px;top:178px">Mulai muncul<br>berbagai pertanyaan:</div>
+   <div class="stamp">otak: mode investigasi</div>
+
+   <div class="bubble q1 tail-l">“Aku salah<br>ngomong, ya?”</div>
+   <div class="bubble q2 tail-r">“Dia lagi marah<br>sama aku?”</div>
+   <div class="bubble q3 tail-l">“Apa dia udah bosan<br>ngobrol sama aku?”</div>
+
+   <div class="typing"><i></i><i></i><i></i></div>
+
+   <div class="closing">Nah, tanpa sadar kamu mulai <b>menebak-nebak</b> isi pikiran orang lain.</div>
+   <div class="footer"><span>Overthinking &amp; Mind Reading</span><span>02 / 06</span></div>
+ </div>`
+},
+{
+ no:"03", name:"Mind Reading", use:"The name. Authority without lecturing. Fact vs assumption made visible.",
+ html:`
+ <div class="slide s3">
+   <div class="abs" style="left:80px;top:62px"><div class="meta">Catatan Pikiran / 03</div></div>
+   <div class="abs" style="right:80px;top:62px"><div class="meta meta-r">Istilahnya</div></div>
+   <div class="abs" style="left:80px;right:80px;top:104px"><div class="rule"></div></div>
+
+   <div class="abs" style="left:74px;top:156px;width:940px">
+     <div class="mind">MIND</div>
+     <div class="reading">READING</div>
+   </div>
+
+   <div class="abs" style="left:80px;top:556px;width:500px">
+     <div class="lede">Dalam psikologi, pola pikir ini punya nama:</div>
+     <div class="term">Mind Reading.</div>
+     <div class="copy">Ini termasuk salah satu bentuk <b>cognitive distortion</b> atau distorsi kognitif.</div>
+     <div class="copy">Sederhananya, kamu merasa tahu apa yang orang lain pikirkan, padahal belum tentu kenyataannya seperti itu.</div>
+     <div class="pill">Cognitive distortion</div>
+   </div>
+
+   <svg class="headwrap" viewBox="0 0 500 560" fill="none">
+     <ellipse cx="268" cy="210" rx="132" ry="158" fill="#E2E5FA" stroke="#2B3BEE" stroke-width="2.5" stroke-dasharray="7 9"/>
+     <path d="M176 330C176 398 140 432 110 500H420C394 432 360 398 360 330" fill="#E2E5FA" stroke="#2B3BEE" stroke-width="2.5" stroke-dasharray="7 9"/>
+     <circle cx="222" cy="205" r="6" fill="#2B3BEE"/><circle cx="316" cy="205" r="6" fill="#2B3BEE"/>
+     <path d="M238 266C252 276 286 276 300 264" stroke="#2B3BEE" stroke-width="3" stroke-linecap="round"/>
+   </svg>
+
+   <div class="fact"><div class="lbl">Fakta</div><div class="txt">cuma balas<br>“oh”</div></div>
+   <div class="assumption">
+     <div class="lbl">Asumsi</div>
+     <div class="mini">“dia marah”</div>
+     <div class="mini">“aku salah ngomong”</div>
+     <div class="mini">“dia bosan”</div>
+     <div class="mini" style="opacity:.65">“...atau 97 hal lain”</div>
+   </div>
+
+   <div class="legend"><div class="key"><span class="box"></span> Fakta</div><div class="key"><span class="box dash"></span> Asumsi</div></div>
+   <div class="footer"><span>Overthinking &amp; Mind Reading</span><span>03 / 06</span></div>
+ </div>`
+},
+{
+ no:"04", name:"Solution", use:"Awareness. Three steps, arranged as a path that untangles.",
+ html:`
+ <div class="slide s4">
+   <div class="abs" style="left:80px;top:62px"><div class="meta">Catatan Pikiran / 04</div></div>
+   <div class="abs" style="right:80px;top:62px"><div class="meta meta-r">Cara keluar</div></div>
+   <div class="abs" style="left:80px;right:80px;top:104px"><div class="rule"></div></div>
+
+   <div class="abs headline" style="left:80px;top:178px">Kalau mulai mengalami ini,<br>coba ingat tiga hal:</div>
+
+   <svg class="path" viewBox="0 0 920 720" fill="none">
+     <path d="M40 660C220 660 220 560 320 540C420 520 420 420 520 400C620 380 620 280 720 260C800 244 850 220 880 160" stroke="#2B3BEE" stroke-width="2" stroke-dasharray="6 10"/>
+     <circle cx="40" cy="660" r="6" fill="#2B3BEE"/><circle cx="880" cy="160" r="6" fill="#2B3BEE"/>
+   </svg>
+
+   <div class="step s-a">
+     <div class="n">01</div>
+     <div class="txt"><small>Pause</small>Jangan langsung percaya sama asumsi sendiri.</div>
+     <svg class="icon" viewBox="0 0 120 120" fill="none"><path d="M20 26H100V82H62L40 100V82H20V26Z" fill="#fff" stroke="#2B3BEE" stroke-width="3"/><path d="M34 66L86 38" stroke="#14151B" stroke-width="7" stroke-linecap="round"/><circle cx="34" cy="38" r="5" fill="#2B3BEE"/><circle cx="86" cy="66" r="5" fill="#2B3BEE"/></svg>
+   </div>
+   <div class="step s-b">
+     <div class="n">02</div>
+     <div class="txt"><small>Fact-check</small>Bedakan fakta dan ketakutanmu.</div>
+     <svg class="icon" viewBox="0 0 120 120" fill="none"><rect x="14" y="34" width="64" height="62" rx="4" fill="#2B3BEE"/><rect x="42" y="18" width="64" height="62" rx="4" fill="#fff" stroke="#2B3BEE" stroke-width="3" stroke-dasharray="7 6"/><path d="M58 42H90M58 56H84M58 70H76" stroke="#2B3BEE" stroke-width="3" stroke-linecap="round"/></svg>
+   </div>
+   <div class="step s-c">
+     <div class="n">03</div>
+     <div class="txt"><small>Ask</small>Kalau memang mengganggu, lebih baik tanyakan daripada terus menebak.</div>
+     <svg class="icon" viewBox="0 0 120 120" fill="none"><path d="M14 22H106V82H58L34 102V82H14V22Z" fill="#fff" stroke="#2B3BEE" stroke-width="3"/><path d="M36 52H84M84 52L68 38M84 52L68 66" stroke="#2B3BEE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+   </div>
+
+   <div class="note">asumsi ≠ kenyataan</div>
+   <div class="footer"><span>Overthinking &amp; Mind Reading</span><span>04 / 06</span></div>
+ </div>`
+},
+{
+ no:"05", name:"Result", use:"Relief. Full cobalt, one small ‘oh’, a huge breath of white space.",
+ html:`
+ <div class="slide s5">
+   <div class="abs" style="left:80px;top:62px"><div class="meta">Catatan Pikiran / 05</div></div>
+   <div class="abs" style="right:80px;top:62px"><div class="meta meta-r">Pelan-pelan</div></div>
+   <div class="abs" style="left:80px;right:80px;top:104px"><div class="rule"></div></div>
+
+   <div class="ripple" style="width:360px;height:360px;left:185px;top:502px"></div>
+   <div class="ripple" style="width:600px;height:600px;left:185px;top:502px"></div>
+   <div class="ripple" style="width:860px;height:860px;left:185px;top:502px"></div>
+
+   <div class="abs headline" style="left:80px;top:176px">Kamu akan belajar bahwa nggak semua respons orang lain punya arti tersembunyi.</div>
+
+   <div class="bubble-oh">oh</div>
+
+   <div class="abs quote" style="left:76px;top:660px">
+     Kadang,<br><em>‘oh’</em> ya cuma<span class="big">‘oh’.</span>
+   </div>
+
+   <div class="abs support" style="left:86px;top:1130px">Nggak perlu membuat seribu skenario dari satu kata.</div>
+   <div class="footer"><span>Overthinking &amp; Mind Reading</span><span>05 / 06</span></div>
+ </div>`
+},
+{
+ no:"06", name:"CTA", use:"Engagement. Turn recognition into a comment thread.",
+ html:`
+ <div class="slide s6">
+   <div class="abs" style="left:80px;top:62px"><div class="meta">Catatan Pikiran / 06</div></div>
+   <div class="abs" style="right:80px;top:62px"><div class="meta meta-r">Giliran kamu</div></div>
+   <div class="abs" style="left:80px;right:80px;top:104px"><div class="rule"></div></div>
+
+   <div class="abs headline" style="left:80px;top:170px">Jujur, kamu sering <em>kayak gini</em> juga nggak?</div>
+   <div class="abs support" style="left:80px;top:548px">Coba ceritain hal paling random yang pernah bikin kamu overthinking di kolom komentar!</div>
+
+   <div class="heart">♡</div>
+   <img class="notif2" src="${asset}">
+
+   <div class="composer">
+     <div class="row"><div class="avatar">k</div><div class="placeholder">Tulis ceritamu di sini<span class="cursor"></span></div></div>
+     <svg class="send" viewBox="0 0 120 120" fill="none"><path d="M18 60L102 20L72 102L54 70L18 60Z" fill="#F1EDE4"/><path d="M54 70L102 20" stroke="#2B3BEE" stroke-width="4"/></svg>
+   </div>
+
+   <div class="cta">Komentar di bawah <span>↓</span></div>
+   <div class="mini-c">“aku juga pernah...”</div>
+   <svg class="arrow" viewBox="0 0 120 90" fill="none"><path d="M10 80C30 30 70 18 106 30" stroke="#2B3BEE" stroke-width="3" stroke-linecap="round"/><path d="M92 14L108 30L88 42" stroke="#2B3BEE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+   <div class="footer"><span>Overthinking &amp; Mind Reading</span><span>06 / 06</span></div>
+ </div>`
+}
+];
+
+const params = new URLSearchParams(location.search);
+const mode = params.get("mode") || "overview";
+const board = document.getElementById("board");
+
+if(mode === "slides"){
+  document.body.classList.add("slides-view");
+  board.innerHTML = slides.map(s=>`<div class="card" data-no="${s.no}"><div class="frame">${s.html}</div></div>`).join("");
+} else {
+  board.innerHTML = `
+  <header class="board-head">
+    <div>
+      <div class="kicker">Instagram carousel · design proposal · v1</div>
+      <div class="board-title">OH-<i>VERTHINKING</i></div>
+      <div style="font-size:18px;letter-spacing:.02em;margin-top:14px;color:#33343D">Satu kata, seribu kemungkinan. · 6 slides · 1080 × 1350 px · Bahasa Indonesia</div>
+    </div>
+    <div class="board-sub"><b>Concept:</b> a single “oh” becomes a room full of noise, then shrinks back to one small word. Editorial psychology, not infographic.<br><br><b>Approval gate:</b> wireframes only. No Canva production yet.</div>
+  </header>
+  <div class="system">
+    <div class="swatches">
+      <div class="sw" style="background:#F5F5FA;color:#14151B">F5F5FA</div>
+      <div class="sw" style="background:#14151B;color:#F5F5FA">14151B</div>
+      <div class="sw" style="background:#2B3BEE;color:#fff">2B3BEE</div>
+      <div class="sw" style="background:#AEB7F2;color:#14151B">AEB7F2</div>
+      <div class="sw" style="background:#E2E5FA;color:#14151B">E2E5FA</div>
+      <div class="sw" style="background:#F1EDE4;color:#14151B">F1EDE4</div>
+    </div>
+    <div class="type-note"><b>Display · DM Serif Display</b>Headlines, emotional emphasis, the word “oh”.</div>
+    <div class="type-note"><b>Body · Plus Jakarta Sans</b>Copy, UI, labels. 2 families only.</div>
+    <div class="type-note"><b>Frame · 12 col</b>80 px margin · 8 px baseline · 920 px live area.</div>
+  </div>
+  <div class="grid">
+    ${slides.map(s=>`
+      <figure class="card">
+        <div class="card-top"><div class="card-no">${s.no} / 06</div><div class="card-name">${s.name}</div></div>
+        <div class="frame">${s.html}</div>
+        <figcaption class="card-use">${s.use}</figcaption>
+      </figure>`).join("")}
+  </div>
+  <footer style="margin-top:52px;border-top:2px solid #14151B;padding-top:22px;display:flex;justify-content:space-between;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700">
+    <span>Planning preview only · not final artwork</span>
+    <span>Awaiting explicit approval before Canva production</span>
+  </footer>`;
+}
+</script>
+</body>
+</html>

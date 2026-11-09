@@ -2,7 +2,7 @@ import { createServerClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
 import { Lock } from "lucide-react";
 
-export const instant = false;
+export const dynamic = "force-dynamic";
 
 export default async function AdminLogin({
   searchParams,
