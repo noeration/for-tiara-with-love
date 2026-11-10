@@ -337,6 +337,8 @@ main{padding-top:0}
 .letter .poem{margin:26px 0;padding:22px 26px;border-left:3px solid #b083d6;background:rgba(150,110,190,.09);border-radius:0 10px 10px 0}
 .letter .poem .t{font-family:var(--script);font-size:1.5rem;color:#7a3f9c;margin-bottom:8px}
 .letter .poem span{display:block;font-family:var(--serif);font-style:italic;font-size:1.05rem;line-height:1.9;color:#4a2f60}
+.letter .poem .stanza{margin:0 0 18px;font-family:var(--serif);font-style:italic;font-size:1.05rem;line-height:1.9;color:#4a2f60}
+.letter .poem .stanza:last-child{margin-bottom:0}
 .letter .closing{font-family:var(--script);font-size:1.7rem;color:#6b3a8c;margin-top:26px}
 .letter .sign{font-family:var(--script);font-size:1.9rem;color:#4b2b66}
 .letter .close-letter{margin-top:26px;background:rgba(90,50,120,.08);border:1px solid rgba(120,85,140,.3);color:#5c3178;
@@ -422,8 +424,22 @@ main{padding-top:0}
 .tap-heart{position:fixed;z-index:60;pointer-events:none;color:var(--rose);line-height:1;text-shadow:0 0 12px rgba(245,201,232,.7);animation:tap-rise 1.5s ease-out forwards;will-change:transform,opacity}
 @keyframes tap-rise{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}18%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),calc(-50% - 130px)) scale(1.15)}}
 .daytime{font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(216,180,254,.85);margin-bottom:14px}
-.hug{position:relative;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none}
-.hug-ring{position:absolute;inset:0;border-radius:inherit;background:conic-gradient(rgba(245,201,232,.45) calc(var(--hp,0) * 360deg),transparent 0);opacity:var(--hp,0);pointer-events:none}
+.hug{cursor:pointer}
+
+/* ---------- hug modal ---------- */
+.hug-modal{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:clamp(14px,4vw,44px);background:rgba(16,9,24,.84);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .45s var(--ease);overflow:hidden}
+.hug-modal.open{opacity:1;pointer-events:auto}
+.hug-card{position:relative;z-index:2;width:min(430px,100%);max-height:92vh;overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 22px 22px;border-radius:24px;border:1px solid rgba(216,180,254,.32);background:linear-gradient(180deg,rgba(48,29,70,.97),rgba(24,14,35,.98));box-shadow:0 40px 90px -30px rgba(0,0,0,.95),0 0 70px -26px rgba(200,160,255,.55);transform:scale(.9) translateY(16px);transition:transform .55s var(--ease)}
+.hug-modal.open .hug-card{transform:none}
+.hug-kicker{margin:0;font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(216,180,254,.8)}
+.hug-card h3{margin:0;font-family:var(--script);font-size:1.85rem;font-weight:400;color:var(--rose)}
+.hug-photo{position:relative;width:100%;border-radius:18px;overflow:hidden;box-shadow:0 0 0 1px rgba(245,201,232,.35),0 26px 54px -26px rgba(0,0,0,.9)}
+.hug-photo::after{content:"";position:absolute;inset:0;border-radius:18px;box-shadow:inset 0 0 60px -18px rgba(245,201,232,.55);pointer-events:none}
+.hug-photo img{display:block;width:100%;height:auto}
+.hug-note{margin:0;text-align:center;color:var(--muted);font-size:.92rem;line-height:1.7}
+.hug-hearts{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.hug-heart{position:absolute;color:var(--rose);line-height:1;text-shadow:0 0 14px rgba(245,201,232,.8);animation:hug-float 3.2s ease-out forwards;opacity:0}
+@keyframes hug-float{0%{opacity:0;transform:translate(-50%,0) scale(.35) rotate(var(--rot,0deg))}14%{opacity:1}70%{opacity:.9}100%{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),-72vh) scale(1.15) rotate(var(--rot,0deg))}}
 
 /* ---------- reduced motion ---------- */
 @media(prefers-reduced-motion:reduce){
@@ -433,6 +449,8 @@ main{padding-top:0}
   .js .reveal{opacity:1!important;transform:none!important}
   .js .wish-card{opacity:1!important}
   .letter,.lightbox figure,.vinyl{transition:none!important}
+  .hug-card{transition:none!important}
+  .hug-heart{display:none!important}
   .vinyl.spinning{animation:none!important}
 }
 </style>
@@ -598,37 +616,37 @@ main{padding-top:0}
         </div>
       </div>
       <div class="masonry" id="masonry">
-        <figure class="memory-card reveal" data-full="images/memories/memory-01.jpg" data-caption="Potret yang selalu kusimpan" tabindex="0" role="button" aria-label="Perbesar kenangan 1">
+        <figure class="memory-card reveal" data-full="images/memories/memory-01.jpg" data-caption="dedek nilaa" tabindex="0" role="button" aria-label="Perbesar kenangan 1">
           <img src="images/memories/memory-01.jpg" alt="Kenangan Tiara 1" loading="lazy" width="1080" height="1920">
           <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
           <figcaption class="cap"><p>Potret yang selalu kusimpan</p><span>01</span></figcaption>
         </figure>
-        <figure class="memory-card reveal" data-full="images/memories/memory-02.jpg" data-caption="Senyum yang membuat segalanya ringan" tabindex="0" role="button" aria-label="Perbesar kenangan 2">
+        <figure class="memory-card reveal" data-full="images/memories/memory-02.jpg" data-caption="si cantik bondol aaaa" tabindex="0" role="button" aria-label="Perbesar kenangan 2">
           <img src="images/memories/memory-02.jpg" alt="Kenangan Tiara 2" loading="lazy" width="576" height="1024">
           <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
           <figcaption class="cap"><p>Senyum yang membuat segalanya ringan</p><span>02</span></figcaption>
         </figure>
-        <figure class="memory-card reveal" data-full="images/memories/memory-03.jpg" data-caption="Hari yang tak ingin kulupa" tabindex="0" role="button" aria-label="Perbesar kenangan 3">
+        <figure class="memory-card reveal" data-full="images/memories/memory-03.jpg" data-caption="muncak with my bini" tabindex="0" role="button" aria-label="Perbesar kenangan 3">
           <img src="images/memories/memory-03.jpg" alt="Kenangan Tiara 3" loading="lazy" width="1600" height="709">
           <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
           <figcaption class="cap"><p>Hari yang tak ingin kulupa</p><span>03</span></figcaption>
         </figure>
-        <figure class="memory-card reveal" data-full="images/memories/memory-04.jpg" data-caption="Tempat pulang paling tenang" tabindex="0" role="button" aria-label="Perbesar kenangan 4">
+        <figure class="memory-card reveal" data-full="images/memories/memory-04.jpg" data-caption="cantik banget yatuhann" tabindex="0" role="button" aria-label="Perbesar kenangan 4">
           <img src="images/memories/memory-04.jpg" alt="Kenangan Tiara 4" loading="lazy" width="576" height="1024">
           <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
           <figcaption class="cap"><p>Tempat pulang paling tenang</p><span>04</span></figcaption>
         </figure>
-        <figure class="memory-card reveal" data-full="images/memories/memory-05.jpg" data-caption="Tawa yang masih terasa" tabindex="0" role="button" aria-label="Perbesar kenangan 5">
+        <figure class="memory-card reveal" data-full="images/memories/memory-05.jpg" data-caption="my bini my love my baby my everythingg" tabindex="0" role="button" aria-label="Perbesar kenangan 5">
           <img src="images/memories/memory-05.jpg" alt="Kenangan Tiara 5" loading="lazy" width="576" height="1024">
           <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
           <figcaption class="cap"><p>Tawa yang masih terasa</p><span>05</span></figcaption>
         </figure>
-        <figure class="memory-card reveal" data-full="images/memories/memory-06.jpg" data-caption="Momen kecil, rasa besar" tabindex="0" role="button" aria-label="Perbesar kenangan 6">
+        <figure class="memory-card reveal" data-full="images/memories/memory-06.jpg" data-caption="roblox with my bini" tabindex="0" role="button" aria-label="Perbesar kenangan 6">
           <img src="images/memories/memory-06.jpg" alt="Kenangan Tiara 6" loading="lazy" width="1600" height="709">
           <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
           <figcaption class="cap"><p>Momen kecil, rasa besar</p><span>06</span></figcaption>
         </figure>
-        <figure class="memory-card reveal" data-full="images/memories/memory-07.jpg" data-caption="Selalu, kamu" tabindex="0" role="button" aria-label="Perbesar kenangan 7">
+        <figure class="memory-card reveal" data-full="images/memories/memory-07.jpg" data-caption="first pap yg bikin aku jatuh cinta pada pandangan pertama" tabindex="0" role="button" aria-label="Perbesar kenangan 7">
           <img src="images/memories/memory-07.jpg" alt="Kenangan Tiara 7" loading="lazy" width="1080" height="2408">
           <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></span>
           <figcaption class="cap"><p>Selalu, kamu</p><span>07</span></figcaption>
@@ -641,7 +659,7 @@ main{padding-top:0}
       <div class="section-head center reveal">
         <p class="eyebrow">her little art gallery</p>
         <h2>Dunia yang Tiara Gambar</h2>
-        <p>Karya kecil yang membuatku percaya bahwa Tiara melihat dunia dengan cara yang berbeda — dan itu indah.</p>
+        <p>Seneng banget waktu itu aku di gambarin.</p>
       </div>
       <figure class="art-frame reveal zoom" data-full="images/artworks/artwork-01.jpg" data-caption="Karya Tiara" tabindex="0" role="button" aria-label="Perbesar karya">
         <div class="inner">
@@ -689,10 +707,27 @@ main{padding-top:0}
               <p>Aku tak sabar ingin melihat apa yang akan dibawa tahun ini untukmu. Tapi satu hal yang pasti: aku akan selalu di sini, menemanimu, mendukungmu, dan mencintaimu dengan sepenuh hati.</p>
               <div class="poem">
                 <p class="t">Untuk Tiara</p>
-                <span>Di taman ungu tempat bunga mekar</span>
-                <span>Namamu tertulis di setiap kelopak</span>
-                <span>Tiara, cahaya yang tak pernah pudar</span>
-                <span>Selamat ulang tahun, sayangku.</span>
+                <p class="stanza">Apakah kau tahu bahwa “indah” hanyalah sebuah kata,<br>
+                sesuatu yang terlalu sering diucap, terlalu mudah hilang maknanya?<br>
+                Namun dalam hadirmu, kata itu menemukan tubuh dan jiwa,<br>
+                menjelma bukan sekadar bunyi, tetapi hidup yang bernafas,<br>
+                menyusup lembut ke dalam setiap detik yang kita jalani bersama.</p>
+                <p class="stanza">Dalammu, “indah” bukan sekadar definisi yang terucap,<br>
+                ia adalah cahaya di mata yang merona,<br>
+                senyum yang menyelinap dari bibir hingga ke dalam jantung,<br>
+                adalah jejak aroma bunga di pagi hari, atau bisikan angin di sore hari,<br>
+                meninggalkan desir yang samar, namun abadi dalam ingatan.</p>
+                <p class="stanza">Engkau adalah keindahan yang tak mengenal sekat bahasa,<br>
+                tak membutuhkan baris atau bait untuk menjelma puisi,<br>
+                sebab dari setiap tatapan, langkah, dan bisik,<br>
+                kau menghadirkan yang tak mampu kugambarkan dengan kata.</p>
+                <p class="stanza">Dan ketika kumencoba merangkai “indah” dalam sajak,<br>
+                semua kata terasa memudar di hadapanmu,<br>
+                seolah apa pun yang kutulis, hanya goresan sederhana<br>
+                di sisi lukisan megah yang kau ciptakan dalam hening.</p>
+                <p class="stanza">Maka biarlah kata “indah” menjadi sepi dan fana,<br>
+                karena keindahan sejati adalah engkau,<br>
+                yang tak pernah butuh kata, namun selalu abadi dalam rasa.</p>
               </div>
               <p>Kalau nanti kamu lupa seberapa berharga dirimu, buka lagi halaman ini. Aku akan selalu mengingatkannya.</p>
               <p class="closing">Dengan semua cinta,</p>
@@ -752,10 +787,9 @@ main{padding-top:0}
         <button class="btn" id="celebrateBtn" type="button">Rayakan sekali lagi
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg>
         </button>
-        <button class="btn hug" id="hugBtn" type="button" aria-label="Tahan tombol ini untuk pelukan">
-          <span class="hug-ring" aria-hidden="true"></span>
+        <button class="btn hug" id="hugBtn" type="button" aria-label="Klik untuk pelukan">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.7-9.3-9A5.3 5.3 0 0 1 12 6.4 5.3 5.3 0 0 1 21.3 12C19.5 16.3 12 21 12 21Z"/></svg>
-          <span class="hug-label">Tahan untuk pelukan</span>
+          <span class="hug-label">Klik untuk pelukan</span>
         </button>
         <button class="btn ghost" id="topBtn" type="button">Kembali ke awal</button>
       </div>
@@ -786,6 +820,20 @@ main{padding-top:0}
 </div>
 
 <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+<!-- ---------- HUG ---------- -->
+<div class="hug-modal" id="hugModal" role="dialog" aria-modal="true" aria-labelledby="hugTitle" aria-hidden="true">
+  <div class="hug-hearts" id="hugHearts" aria-hidden="true"></div>
+  <div class="hug-card">
+    <p class="hug-kicker">sebuah pelukan</p>
+    <h3 id="hugTitle">Pelukan untuk Tiara</h3>
+    <div class="hug-photo">
+      <img src="images/tiara/hug.png" alt="Tiara" width="1254" height="1254">
+    </div>
+    <p class="hug-note">Kalau jarak sedang tidak berpihak, ini dulu ya. Peluk paling erat, dikirim langsung dari sini.</p>
+    <button class="btn" id="hugClose" type="button">Tutup</button>
+  </div>
+</div>
 
 <script>
 (function () {
@@ -1212,58 +1260,56 @@ main{padding-top:0}
   $("#celebrateBtn").addEventListener("click", function () { burst($("#confettiLayer"), 110, true); });
   $("#topBtn").addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }); });
 
-  /* ---------- hold for a hug ---------- */
+  /* ---------- click for a hug ---------- */
   (function hug() {
-    var btn = $("#hugBtn");
-    if (!btn) return;
-    var label = $(".hug-label", btn);
-    var HOLD = 1500;
-    var timer = null, start = 0, raf = 0, busy = false;
+    var btn = $("#hugBtn"), modal = $("#hugModal"), layer = $("#hugHearts"), closeBtn = $("#hugClose");
+    if (!btn || !modal) return;
+    var lastFocus = null;
 
-    function setP(v) { btn.style.setProperty("--hp", v.toFixed(3)); }
-    function tick() {
-      var p = Math.min((Date.now() - start) / HOLD, 1);
-      setP(p);
-      if (p >= 1) { finish(); return; }
-      raf = requestAnimationFrame(tick);
-    }
-    function begin() {
-      if (busy || timer) return;
-      start = Date.now();
-      timer = setTimeout(finish, HOLD);
-      raf = requestAnimationFrame(tick);
-    }
-    function cancel() {
-      if (!timer) return;
-      clearTimeout(timer); timer = null;
-      cancelAnimationFrame(raf);
-      setP(0);
-    }
-    function finish() {
-      if (busy) return;
-      busy = true;
-      if (timer) { clearTimeout(timer); timer = null; }
-      cancelAnimationFrame(raf);
-      setP(1);
-      burst($("#confettiLayer"), 50, true);
-      try { if (navigator.vibrate) navigator.vibrate([70, 60, 70]); } catch (err) {}
-      if (label) label.textContent = "Pelukan terkirim ♡";
-      btn.setAttribute("aria-label", "Pelukan terkirim");
-      setTimeout(function () {
-        if (label) label.textContent = "Tahan untuk pelukan";
-        btn.setAttribute("aria-label", "Tahan tombol ini untuk pelukan");
-        setP(0);
-        busy = false;
-      }, 3200);
+    function spawnHearts(n) {
+      if (!layer || reduceMotion) return;
+      for (var i = 0; i < n; i++) {
+        var h = document.createElement("span");
+        h.className = "hug-heart";
+        h.setAttribute("aria-hidden", "true");
+        h.textContent = Math.random() > 0.35 ? "♡" : "♥";
+        h.style.left = (12 + Math.random() * 76).toFixed(1) + "%";
+        h.style.top = (55 + Math.random() * 40).toFixed(1) + "%";
+        h.style.fontSize = (16 + Math.random() * 26).toFixed(0) + "px";
+        h.style.setProperty("--dx", ((Math.random() - 0.5) * 180).toFixed(0) + "px");
+        h.style.setProperty("--rot", ((Math.random() - 0.5) * 40).toFixed(0) + "deg");
+        h.style.animationDelay = (Math.random() * 0.9).toFixed(2) + "s";
+        h.style.animationDuration = (2.6 + Math.random() * 1.6).toFixed(2) + "s";
+        layer.appendChild(h);
+        (function (node) { setTimeout(function () { node.remove(); }, 5000); })(h);
+      }
     }
 
-    btn.addEventListener("pointerdown", begin);
-    ["pointerup", "pointerleave", "pointercancel"].forEach(function (ev) { btn.addEventListener(ev, cancel); });
-    btn.addEventListener("keydown", function (e) {
-      if (e.code === "Space" || e.code === "Enter") { e.preventDefault(); if (!e.repeat) begin(); }
+    function open() {
+      lastFocus = document.activeElement;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("locked");
+      spawnHearts(26);
+      burst($("#confettiLayer"), 40, true);
+      try { if (navigator.vibrate) navigator.vibrate([50, 40, 50]); } catch (err) {}
+      if (closeBtn) closeBtn.focus();
+    }
+    function close() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      if (!gate || gate.classList.contains("hidden")) document.body.classList.remove("locked");
+      if (layer) layer.innerHTML = "";
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    btn.addEventListener("click", open);
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    modal.addEventListener("click", function (e) { if (e.target === modal) close(); });
+    document.addEventListener("keydown", function (e) {
+      if (!modal.classList.contains("open")) return;
+      if (e.key === "Escape") close();
     });
-    btn.addEventListener("keyup", function (e) { if (e.code === "Space" || e.code === "Enter") cancel(); });
-    btn.addEventListener("contextmenu", function (e) { e.preventDefault(); });
   })();
 
   /* confetti when the finale is reached */
