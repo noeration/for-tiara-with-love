@@ -65,6 +65,33 @@ for (const [from, to] of [
 await fs.writeFile(path.join(OUT, "index.html"), html, "utf8");
 await fs.writeFile(path.join(OUT, ".nojekyll"), "");
 
+// Single-file build: every image and the song inlined as data URIs, so the page
+// works when it is opened straight from disk or moved away from its folders.
+let single = html;
+for (const ref of refs) {
+  const src = path.join(ROOT, "public", ref);
+  const ext = path.extname(ref).toLowerCase();
+  const base = path.posix.basename(ref, path.extname(ref));
+  let file = path.join(OUT, ref);
+  if (ext === ".png" || ext === ".jpeg" || ext === ".jpg") {
+    file = path.join(OUT, path.posix.dirname(ref), `${base}.webp`);
+  }
+  const data = await fs.readFile(file);
+  const mime =
+    ext === ".mp3" ? "audio/mpeg"
+    : ext === ".wav" ? "audio/wav"
+    : ext === ".png" || ext === ".jpg" || ext === ".jpeg" ? "image/webp"
+    : "image/webp";
+  const dataUri = `data:${mime};base64,${data.toString("base64")}`;
+  const deployed = ext === ".png" || ext === ".jpg" || ext === ".jpeg"
+    ? path.posix.join(path.posix.dirname(ref), `${base}.webp`)
+    : ref;
+  single = single.replaceAll(`"${deployed}"`, `"${dataUri}"`);
+}
+await fs.writeFile(path.join(OUT, "for-tiara.html"), single, "utf8");
+await fs.writeFile(path.join(ROOT, "for-tiara.html"), single, "utf8");
+console.log(`single file: ${(Buffer.byteLength(single) / 1024 / 1024).toFixed(2)} MB`);
+
 const total = (await fs.readdir(OUT, { recursive: true }))
   .map((f) => path.join(OUT, f))
   .reduce(async (accP, f) => {

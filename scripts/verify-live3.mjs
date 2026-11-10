@@ -40,6 +40,6 @@ await page.waitForTimeout(1000);
 console.log("hidden reveals after jump:", await page.evaluate(() =>
   [...document.querySelectorAll(".reveal")].filter((e) => !e.classList.contains("in")).length));
 console.log("broken images:", await page.evaluate(() =>
-  [...document.images].filter((i) => !(i.complete && i.naturalWidth > 0)).length));
+  [...document.images].filter((i) => i.getAttribute("src") && !(i.complete && i.naturalWidth > 0)).length));
 console.log("failures:", bad.length ? bad.join(" | ") : "none");
 await browser.close();

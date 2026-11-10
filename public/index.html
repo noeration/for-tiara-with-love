@@ -883,6 +883,8 @@ main{padding-top:0}
       }, { passive: true });
       window.addEventListener("resize", sweep, { passive: true });
       sweep();
+      /* Last resort: whatever happens, nothing may stay invisible. */
+      setTimeout(function () { revealEls.forEach(showEl); }, 2500);
     } catch (err) {
       revealEls.forEach(showEl);
     }
