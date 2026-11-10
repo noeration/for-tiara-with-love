@@ -416,7 +416,7 @@ main{padding-top:0}
 .lb-close{position:fixed;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(216,180,254,.25);
   background:rgba(20,10,34,.7);display:grid;place-items:center;cursor:pointer}
 .lb-close svg{width:18px;height:18px;stroke:var(--lavender);fill:none;stroke-width:2}
-.confetti-layer{position:fixed;inset:0;z-index:85;pointer-events:none;overflow:hidden}
+.confetti-layer{position:fixed;inset:0;z-index:96;pointer-events:none;overflow:hidden}
 .confetti-piece{position:absolute;top:-6vh;border-radius:2px;animation:confetti linear forwards;will-change:transform}
 .heart{position:absolute;bottom:-6vh;font-size:18px;color:var(--rose);animation:heart-rise linear forwards;will-change:transform}
 
@@ -437,7 +437,6 @@ main{padding-top:0}
 .hug-photo::after{content:"";position:absolute;inset:0;border-radius:18px;box-shadow:inset 0 0 60px -18px rgba(245,201,232,.55);pointer-events:none}
 .hug-photo img{display:block;width:100%;height:auto}
 .hug-note{margin:0;text-align:center;color:var(--muted);font-size:.92rem;line-height:1.7}
-.hug-hearts{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
 .hug-heart{position:absolute;color:var(--rose);line-height:1;text-shadow:0 0 14px rgba(245,201,232,.8);animation:hug-float 3.2s ease-out forwards;opacity:0}
 @keyframes hug-float{0%{opacity:0;transform:translate(-50%,0) scale(.35) rotate(var(--rot,0deg))}14%{opacity:1}70%{opacity:.9}100%{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),-72vh) scale(1.15) rotate(var(--rot,0deg))}}
 
@@ -825,7 +824,6 @@ main{padding-top:0}
 
 <!-- ---------- HUG ---------- -->
 <div class="hug-modal" id="hugModal" role="dialog" aria-modal="true" aria-labelledby="hugTitle" aria-hidden="true">
-  <div class="hug-hearts" id="hugHearts" aria-hidden="true"></div>
   <div class="hug-card">
     <p class="hug-kicker">sebuah pelukan</p>
     <h3 id="hugTitle">Pelukan untuk Tiara</h3>
@@ -865,13 +863,13 @@ main{padding-top:0}
       r = Math.random();
       el = document.createElement("span");
       el.className = "petal";
-      var size = 14 + r * 26;
+      var size = 7 + r * 12;
       el.style.left = (Math.random() * 100).toFixed(2) + "%";
       el.style.width = size.toFixed(0) + "px";
       el.style.height = (size * 1.55).toFixed(0) + "px";
       el.style.animationDelay = (-r * 22).toFixed(2) + "s";
       el.style.animationDuration = (17 + r * 16).toFixed(2) + "s";
-      el.style.opacity = (0.55 + r * 0.45).toFixed(2);
+      el.style.opacity = (0.4 + r * 0.4).toFixed(2);
       host.appendChild(el);
     }
   })();
@@ -1267,25 +1265,27 @@ main{padding-top:0}
 
   /* ---------- click for a hug ---------- */
   (function hug() {
-    var btn = $("#hugBtn"), modal = $("#hugModal"), layer = $("#hugHearts"), closeBtn = $("#hugClose");
+    var btn = $("#hugBtn"), modal = $("#hugModal"), closeBtn = $("#hugClose");
     if (!btn || !modal) return;
-    var lastFocus = null;
+    var fx = $("#confettiLayer");
+    var lastFocus = null, autoTimer = null;
+    var AUTO_CLOSE = 3200;
 
     function spawnHearts(n) {
-      if (!layer || reduceMotion) return;
+      if (!fx || reduceMotion) return;
       for (var i = 0; i < n; i++) {
         var h = document.createElement("span");
         h.className = "hug-heart";
         h.setAttribute("aria-hidden", "true");
         h.textContent = Math.random() > 0.35 ? "♡" : "♥";
-        h.style.left = (12 + Math.random() * 76).toFixed(1) + "%";
-        h.style.top = (55 + Math.random() * 40).toFixed(1) + "%";
-        h.style.fontSize = (16 + Math.random() * 26).toFixed(0) + "px";
-        h.style.setProperty("--dx", ((Math.random() - 0.5) * 180).toFixed(0) + "px");
+        h.style.left = (14 + Math.random() * 72).toFixed(1) + "%";
+        h.style.top = (52 + Math.random() * 42).toFixed(1) + "%";
+        h.style.fontSize = (14 + Math.random() * 22).toFixed(0) + "px";
+        h.style.setProperty("--dx", ((Math.random() - 0.5) * 190).toFixed(0) + "px");
         h.style.setProperty("--rot", ((Math.random() - 0.5) * 40).toFixed(0) + "deg");
-        h.style.animationDelay = (Math.random() * 0.9).toFixed(2) + "s";
-        h.style.animationDuration = (2.6 + Math.random() * 1.6).toFixed(2) + "s";
-        layer.appendChild(h);
+        h.style.animationDelay = (Math.random() * 0.7).toFixed(2) + "s";
+        h.style.animationDuration = (2.6 + Math.random() * 1.4).toFixed(2) + "s";
+        fx.appendChild(h);
         (function (node) { setTimeout(function () { node.remove(); }, 5000); })(h);
       }
     }
@@ -1295,16 +1295,18 @@ main{padding-top:0}
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
       document.body.classList.add("locked");
-      spawnHearts(26);
-      burst($("#confettiLayer"), 40, true);
-      try { if (navigator.vibrate) navigator.vibrate([50, 40, 50]); } catch (err) {}
+      spawnHearts(24);
+      burst(fx, 34, false);
+      try { if (navigator.vibrate) navigator.vibrate([45, 35, 45]); } catch (err) {}
       if (closeBtn) closeBtn.focus();
+      if (autoTimer) clearTimeout(autoTimer);
+      autoTimer = setTimeout(close, AUTO_CLOSE);
     }
     function close() {
+      if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
       modal.classList.remove("open");
       modal.setAttribute("aria-hidden", "true");
       if (!gate || gate.classList.contains("hidden")) document.body.classList.remove("locked");
-      if (layer) layer.innerHTML = "";
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
 
