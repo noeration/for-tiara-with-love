@@ -444,8 +444,10 @@ main{padding-top:0}
 /* ---------- reduced motion ---------- */
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .ambient .nebula,.ambient .mist,.ambient .orb,.star,.petal,.marquee-track,.tonearm,
+  .ambient .nebula,.ambient .mist,.ambient .orb,.star,.marquee-track,.tonearm,
   .gate-portrait .halo,.gate-portrait .ring{animation:none!important}
+  /* petals still fall, only slower and calmer */
+  .petal{animation-duration:34s!important}
   .js .reveal{opacity:1!important;transform:none!important}
   .js .wish-card{opacity:1!important}
   .letter,.lightbox figure,.vinyl{transition:none!important}
@@ -859,7 +861,7 @@ main{padding-top:0}
       el.style.animationDuration = (3 + r * 4).toFixed(2) + "s";
       host.appendChild(el);
     }
-    for (i = 0; i < 26; i++) {
+    for (i = 0; i < 34; i++) {
       r = Math.random();
       el = document.createElement("span");
       el.className = "petal";
@@ -1227,7 +1229,9 @@ main{padding-top:0}
 
   /* ---------- confetti / hearts ---------- */
   function burst(layer, count, hearts) {
-    if (reduceMotion) return;
+    /* Calmer, never absent: reduced motion gets fewer pieces that drift slower. */
+    var calm = reduceMotion;
+    if (calm) count = Math.max(14, Math.round(count * 0.4));
     var colors = ["#d8b4fe", "#f5c9e8", "#c4b5fd", "#ffffff", "#a78bfa", "#f0abfc", "#fde68a"];
     for (var i = 0; i < count; i++) {
       var p = document.createElement("span");
@@ -1239,7 +1243,7 @@ main{padding-top:0}
       p.style.borderRadius = Math.random() > 0.5 ? "99px" : "2px";
       p.style.setProperty("--dx", ((Math.random() - 0.5) * 300).toFixed(0) + "px");
       p.style.animationDelay = (Math.random() * 0.9).toFixed(2) + "s";
-      p.style.animationDuration = (3.4 + Math.random() * 2.6).toFixed(2) + "s";
+      p.style.animationDuration = ((calm ? 6 : 3.4) + Math.random() * 2.6).toFixed(2) + "s";
       layer.appendChild(p);
     }
     if (hearts) {
@@ -1251,13 +1255,14 @@ main{padding-top:0}
         h.style.fontSize = (14 + Math.random() * 18).toFixed(0) + "px";
         h.style.setProperty("--dx", ((Math.random() - 0.5) * 160).toFixed(0) + "px");
         h.style.animationDelay = (Math.random() * 1.4).toFixed(2) + "s";
-        h.style.animationDuration = (4 + Math.random() * 3).toFixed(2) + "s";
+        h.style.animationDuration = ((calm ? 7 : 4) + Math.random() * 3).toFixed(2) + "s";
         layer.appendChild(h);
       }
     }
-    setTimeout(function () { layer.innerHTML = ""; }, 9000);
+    if (layer._clearTimer) clearTimeout(layer._clearTimer);
+    layer._clearTimer = setTimeout(function () { layer.innerHTML = ""; }, 9000);
   }
-  $("#celebrateBtn").addEventListener("click", function () { burst($("#confettiLayer"), 110, true); });
+  $("#celebrateBtn").addEventListener("click", function () { burst($("#confettiLayer"), 140, true); });
   $("#topBtn").addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }); });
 
   /* ---------- click for a hug ---------- */
@@ -1315,14 +1320,24 @@ main{padding-top:0}
   /* confetti when the finale is reached */
   (function finaleWatch() {
     var finale = $("#penutup");
-    if (!("IntersectionObserver" in window)) return;
-    var seen = false;
+    if (!finale) return;
+    var last = 0;
+    function fire() {
+      var now = Date.now();
+      if (now - last < 5000) return; /* don't restack on tiny scroll jitter */
+      last = now;
+      burst($("#confettiLayer"), 90, true);
+    }
+    if (!("IntersectionObserver" in window)) { fire(); return; }
     var o = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting && !seen) { seen = true; burst($("#confettiLayer"), 70, true); o.disconnect(); }
-      });
-    }, { threshold: 0.35 });
+      entries.forEach(function (e) { if (e.isIntersecting) fire(); });
+    }, { threshold: 0.25 });
     o.observe(finale);
+    /* safety net: the section can already be on screen before the observer runs */
+    window.addEventListener("load", function () {
+      var r = finale.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.9) fire();
+    });
   })();
 
 })();
